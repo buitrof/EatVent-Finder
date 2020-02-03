@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+
+<body>
+
+    <div class="row">
+        <form class="col s12">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="input_text" type="text" data-length="10">
+                    <label for="input_text">Search for an event</label>
+                </div>
+            </div>
+            <div class="row">
+                <button id="searchBtn" class="btn waves-effect waves-light" type="submit" name="action">Search</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+
+        const base = 'https://app.ticketmaster.com/discovery/v1/events.json?'
+        const api = '&apikey=TqPIy9GVqFGripe0WWubsOyxCKeuGtZf'
+        let keywords = ''
+        let id = 'input_text'
+
+        function getKeywords(id) {
+                keywords = document.getElementById('input_text').value
+                keywords = keywords.replace(/\s+/g, '+')
+                return keywords
+            }
+
+        function buildURL() {
+            getKeywords()
+            let url = base + getKeywords() + api
+            console.log(getKeywords())
+            console.log(url)
+        }
+
+        document.getElementById('searchBtn').addEventListener('click', event => {
+            event.preventDefault()
+            buildURL()
+        })
+
+    </script>
+</body>
+
+</html>
