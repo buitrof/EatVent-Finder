@@ -15,7 +15,7 @@
         <form class="col s12">
             <div class="row">
                 <div class="input-field col s6">
-                    <input id="input_text" type="text" data-length="10">
+                    <input onchange="getKeywords()" id="input_text" type="text" data-length="10">
                     <label for="input_text">Search for an event</label>
                 </div>
             </div>
@@ -40,7 +40,7 @@
             }
 
         function buildURL() {
-            getKeywords()
+            getKeywords('input_text')
             let url = base + getKeywords() + api
             console.log(getKeywords())
             console.log(url)
@@ -49,6 +49,7 @@
         document.getElementById('searchBtn').addEventListener('click', event => {
             event.preventDefault()
             buildURL()
+            document.getElementById('input_text').value = ''
         })
 
     </script>
