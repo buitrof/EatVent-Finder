@@ -4,14 +4,14 @@
 //B = Base
 //K = Key
 //S = Sort
-const L_B_TICKETMASTER = 'https://app.ticketmaster.com/discovery/v2/events?'
+const L_B_TICKETMASTER = 'https://app.ticketmaster.com/discovery/v2/events.json?'
 const K_TICKETMASTER = 'apikey=7elxdku9GGG5k8j0Xm8KWdANDgecHMV0'
 const S_DATE_ASC = 'sort=date,asc'
 const ID_INPUT_TEXT = 'input_text'
 
 //Let global declarations
 let listOfEvents = []
-let keywords = ''
+let keywords
 
 
 //Definition of Event object to store Ticketmaster events
@@ -61,11 +61,18 @@ class Event {
 
 }
 
+function getKeywords() {
+    keywords = document.getElementById(ID_INPUT_TEXT).value
+    keywords = keywords.replace(/\s+/g, '+')
+    return keywords
+}
+
 //Fetches events from Ticketmaster based on keyword search
 //Then sets them into listOfEvents array
 //in format word+word+word+....
 function fetchTMEventList(keywords) {
-    let link = `${L_B_TICKETMASTER}locale=*&${S_DATE_ASC}&${K_TICKETMASTER}&keyword=${keywords}`
+    getKeywords()
+    let link = `${L_B_TICKETMASTER}locale=*&${S_DATE_ASC}&${K_TICKETMASTER}&keyword=${getKeywords()}`
     fetch(link)
         .then(r => r.json())
         .then(eventList => {
@@ -73,20 +80,25 @@ function fetchTMEventList(keywords) {
             if (elementsFound > 0) {
                 let eventsJSON = eventList._embedded.events
                 eventsJSON.forEach(event => {
-                    //console.log(event)
+                    console.log(event)
                     listOfEvents.push(new Event(event))
-                });
+                    let eventElem = document.createElement('li')
+                    eventElem.innerHTML = `${event.name}, <a href="${event.url}">Link</a>`
+                    document.getElementById('myList').append(eventElem) 
+                    })
             } else {
                 console.log('Nothing found')
+                document.getElementById('myList').innerHTML = `
+                <p> Nothing found</p>
+                `
             }
 
         })
         .catch(e => console.error(e))
 }
 
-function getKeywords(id) {
-    keywords = document.getElementById('input_text').value
-    keywords = keywords.replace(/\s+/g, '+')
-    return keywords
-}
-
+document.getElementById('submit').addEventListener('click', event => {
+    event.preventDefault()
+    fetchTMEventList()
+    document.getElementById('input_text').value = ''
+})
