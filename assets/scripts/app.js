@@ -29,29 +29,21 @@ class Event {
         this.longitude = null //GPS Longitude coords, set to null, JSON may not contain
 
         //JSON can contain a item containing _embedded or place do location 
-        //Sets location data for  evenet if it exists
+        let venue = null
         if (typeof event._embedded != 'undefined') {
-            let venue = event._embedded.venues[0]
-            this.venueName = venue.name
-            this.city = venue.city.name
-            this.state = null
-            typeof venue.state === 'undefined' ? null : this.state = venue.state.name
-            this.country = venue.country.name
-            this.address = venue.address.line1
-            typeof venue.location === 'undefined' ? null : this.longitude = venue.location.longitude
-            typeof venue.location === 'undefined' ? null : this.latitude = venue.location.latitude
-            this.postalCode = venue.postalCode
+            venue = event._embedded.venues[0]
+        } else if (typeof event.place != 'undefined') {
+            venue = event.place
         }
-        else if (typeof event.place != 'undefined') {
-            let place = event.place
-            this.venueName = null
-            this.cty = place.city.name
-            this.country = place.country.name
-            this.address = place.address.line1
-            typeof place.location === 'undefined' ? null : this.longitude = place.location.longitude
-            typeof place.location === 'undefined' ? null : this.latitude = place.location.latitude
-            this.postalCode = place.postalCode
-        }
+        this.venueName = venue.name
+        this.city = venue.city.name
+        this.state = venue.state.name
+        this.country = venue.country.name
+        this.address = venue.address.line1
+        typeof venue.location === 'undefined' ? null : this.longitude = venue.location.longitude
+        typeof venue.location === 'undefined' ? null : this.latitude = venue.location.latitude
+        this.postalCode = venue.postalCode
+        //console.log(this)
     }
 
     //Returns is Event has both longitude and latitude
@@ -72,24 +64,34 @@ function getKeywords() {
 //in format word+word+word+....
 function fetchTMEventList(keywords) {
     getKeywords()
-    let link = `${L_B_TICKETMASTER}locale=*&${S_DATE_ASC}&${K_TICKETMASTER}&keyword=${getKeywords()}`
+    let link = `${L_B_TICKETMASTER}locale=*&${S_DATE_ASC}&${K_TICKETMASTER}&keyword=${getKeywords()}&page=${1}&countryCode=US`
     fetch(link)
         .then(r => r.json())
         .then(eventList => {
             let elementsFound = parseInt(eventList.page.totalElements)
+            //console.log(eventList.page)
             if (elementsFound > 0) {
                 let eventsJSON = eventList._embedded.events
                 eventsJSON.forEach(event => {
                     console.log(event)
                     listOfEvents.push(new Event(event))
-                    let eventElem = document.createElement('li')
-                    eventElem.innerHTML = `${event.name}, <a href="${event.url}">Link</a>`
-                    document.getElementById('myList').append(eventElem) 
-                    })
+                    let eventElem = document.createElement('div')
+                    eventElem.className = 'uk-card uk-card-hover uk-card-body uk-grid'
+                    eventElem.innerHTML = `
+                    <img src="${event.images[0].url}" alt="Image" srcset="" class="card-image">
+                    <div>
+                    <h3 class="uk-card-title">${event.name}</h3>
+                    <p><a href="${event.url}">Link</a></p>
+                    <p>${event._embedded.venues[0].name}</p>
+                    <p>${event.dates.start.localDate}</p>
+                    </div>
+                    `
+                    document.getElementById('search-results').append(eventElem)
+                })
             } else {
                 console.log('Nothing found')
-                document.getElementById('myList').innerHTML = `
-                <p> Nothing found</p>
+                document.getElementById('search-results').innerHTML = `
+                <h3> Nothing found</h3>
                 `
             }
 
@@ -101,5 +103,5 @@ document.getElementById('submit').addEventListener('click', event => {
     event.preventDefault()
     fetchTMEventList()
     document.getElementById('input_text').value = ''
-    document.getElementById('myList').innerHTML = ''
+    document.getElementById('search-results').innerHTML = ``
 })
