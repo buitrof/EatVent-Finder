@@ -101,4 +101,5 @@ document.getElementById('submit').addEventListener('click', event => {
     event.preventDefault()
     fetchTMEventList()
     document.getElementById('input_text').value = ''
+    document.getElementById('myList').innerHTML = ''
 })
