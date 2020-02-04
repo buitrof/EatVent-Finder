@@ -94,7 +94,6 @@ function fetchTMEventList(keywords) {
                 <h3> Nothing found</h3>
                 `
             }
-
         })
         .catch(e => console.error(e))
 }
