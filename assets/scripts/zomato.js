@@ -10,40 +10,41 @@ let long = ''
 
 class Restaurant {
 
-    constructor (restaurant) {
-        this.name = restaurant.name
-        this.user_rating = restaurant.user_rating
-        this.location.address, this.location.city = restaurant.address
-        this.location.phone_numbers = restaurant.phone_numbers
-        this.latitude = null
-        this.longitude = null
-        this.cuisines = restaurant.cuisines
-        this.highlights = restaurant.keywords
-        this.user_rating = restaurant.user_rating
-        this.photos = restaurant.photos
-    }
+  constructor(restaurant) {
+    this.name = restaurant.name
+    this.user_rating = restaurant.user_rating
+    this.address = restaurant.location.address
+    this.phone_numbers = restaurant.phone_numbers
+    this.latitude = null
+    this.longitude = null
+    this.cuisines = restaurant.cuisines
+    this.highlights = restaurant.highlights
+    this.user_rating = restaurant.user_rating
+    this.photos = restaurant.photos
+    //console.log(this)
+  }
 
 
 
 }
 
 function getRestaurantChoices(latt, long) {
-    let link = `${L_B_ZOMATO}lat=${latt}&lon=${long}&${S_RATING}&${K_ZOMATO}`
-    fetch(link)
-        .then(d => d.json())
-        .then(restaurantsLink => {
-            console.log(restaurantsLink)
-            let restaurantsFound = parseInt(restaurantsLink.restaurants.length)
-            console.log(restaurantsFound)
-            if (restaurantsFound > 0) {
-              let restaurantsJSON = restaurantsLink.restaurants
-              restaurantsJSON.forEach(restaurant => {
-                console.log(restaurant)
-              })
-              } else {
-                console.log('Nothing found')
-              }
+  let link = `${L_B_ZOMATO}lat=${latt}&lon=${long}&${S_RATING}&${K_ZOMATO}`
+  fetch(link)
+    .then(d => d.json())
+    .then(restaurantsLink => {
+      console.log(restaurantsLink)
+      let restaurantsFound = parseInt(restaurantsLink.restaurants.length)
+      //console.log(restaurantsFound)
+      if (restaurantsFound > 0) {
+        let restaurantsJSON = restaurantsLink.restaurants
+        restaurantsJSON.forEach(restaurant => {
+          console.log(new Restaurant(restaurant.restaurant))
         })
-        .catch(e => console.error(e))
+      } else {
+        console.log('Nothing found')
+      }
+    })
+    .catch(e => console.error(e))
 }
 getRestaurantChoices('47.60577', '-122.329437')
