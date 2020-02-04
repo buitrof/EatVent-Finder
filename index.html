@@ -1,28 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>EatVent</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href="assets/styles/styles.css" rel="stylesheet">
-</head>
-<body>
-  <div class="imgBackground"></div>
-  <section class="mainDescription">
-  <img src="./assets/styles/eatVent logo.png" alt="logo" class="logo">
-<div class="description">
-<p>
-  Welcome to EatVent, a site dedicated to showing you popular food choices for you to try before or after an event.
-</p>
-<p>
-To get started click the search option on the Nav Bar Enter what event you are looking for...
-</p>
-</div>
-</section>
+ 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>EatVent-Finder</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.3.0/dist/css/uikit.min.css" />
+    <link rel="stylesheet" href="./assets/styles/styles.css">
+</head>
+
+<body>
+
+    <nav class="uk-navbar-container uk-margin uk-navbar">
+        <div class="uk-navbar-left">
+
+            <a class="uk-navbar-item uk-logo image" href="#"><img
+                    src="https://files.slack.com/files-pri/TS9L54NUC-FT407LAPL/eatvent_logo.png"></a>
+
+            <ul class="uk-navbar-nav">
+                <li>
+                    <a href="#">
+                        <span class="uk-icon uk-margin-small-right" uk-icon="icon: home"></span>
+                        Home
+                    </a>
+                </li>
+            </ul>
+
+            <div class="uk-navbar-item">
+                <div>Some <a href="#">Link</a></div>
+            </div>
+
+            <div class="uk-navbar-item">
+                <form action="javascript:void(0)">
+                    <input id="input_text" class="uk-input uk-form-width-medium" type="text"
+                        placeholder="What do you want to do?">
+                    <button id="submit" class="uk-button uk-button-default">Search</button>
+                </form>
+            </div>
+
+        </div>
+    </nav>
+<div class="imgBackground">
+<section class="mainDescription">
+  <img src="./assets/styles/eatVent logo.png" alt="logo" class="logo">
+  <div class="description">
+    <p>
+      Welcome to EatVent, a site dedicated to showing you popular food choices for you to try before or after an event.
+    </p>
+    <p>
+      To get started click the search option on the Nav Bar Enter what event you are looking for...
+    </p>
+  </div>
+</section>
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.3.0/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.3.0/dist/js/uikit-icons.min.js"></script>
+    <script src="./assets/scripts/app.js"></script>
 </body>
+
 </html>
