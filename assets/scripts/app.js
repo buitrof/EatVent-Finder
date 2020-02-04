@@ -29,29 +29,21 @@ class Event {
         this.longitude = null //GPS Longitude coords, set to null, JSON may not contain
 
         //JSON can contain a item containing _embedded or place do location 
-        //Sets location data for  evenet if it exists
+        let venue = null
         if (typeof event._embedded != 'undefined') {
-            let venue = event._embedded.venues[0]
-            this.venueName = venue.name
-            this.city = venue.city.name
-            this.state = null
-            typeof venue.state === 'undefined' ? null : this.state = venue.state.name
-            this.country = venue.country.name
-            this.address = venue.address.line1
-            typeof venue.location === 'undefined' ? null : this.longitude = venue.location.longitude
-            typeof venue.location === 'undefined' ? null : this.latitude = venue.location.latitude
-            this.postalCode = venue.postalCode
+            venue = event._embedded.venues[0]
+        } else if (typeof event.place != 'undefined') {
+            venue = event.place
         }
-        else if (typeof event.place != 'undefined') {
-            let place = event.place
-            this.venueName = null
-            this.cty = place.city.name
-            this.country = place.country.name
-            this.address = place.address.line1
-            typeof place.location === 'undefined' ? null : this.longitude = place.location.longitude
-            typeof place.location === 'undefined' ? null : this.latitude = place.location.latitude
-            this.postalCode = place.postalCode
-        }
+        this.venueName = venue.name
+        this.city = venue.city.name
+        this.state = venue.state.name
+        this.country = venue.country.name
+        this.address = venue.address.line1
+        typeof venue.location === 'undefined' ? null : this.longitude = venue.location.longitude
+        typeof venue.location === 'undefined' ? null : this.latitude = venue.location.latitude
+        this.postalCode = venue.postalCode
+        //console.log(this)
     }
 
     //Returns is Event has both longitude and latitude
@@ -65,11 +57,12 @@ class Event {
 //Then sets them into listOfEvents array
 //in format word+word+word+....
 function fetchTMEventList(keywords) {
-    let link = `${L_B_TICKETMASTER}locale=*&${S_DATE_ASC}&${K_TICKETMASTER}&keyword=${keywords}`
+    let link = `${L_B_TICKETMASTER}locale=en-us&${S_DATE_ASC}&${K_TICKETMASTER}&keyword=${keywords}&page=${1}&countryCode=US`
     fetch(link)
         .then(r => r.json())
         .then(eventList => {
             let elementsFound = parseInt(eventList.page.totalElements)
+            //console.log(eventList.page)
             if (elementsFound > 0) {
                 let eventsJSON = eventList._embedded.events
                 eventsJSON.forEach(event => {
