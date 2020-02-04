@@ -103,7 +103,7 @@ const S_RATING = 'sort=rating'
 let listOfRest = []
 let lattLong = ''
 
-function getRestaurantChoices(longitude,latitude) {
+function getRestaurantChoices(longitude, latitude) {
   let link = `${L_B_ZOMATO}lat=47.60577&lon=-122.329437&${S_RATING}&${K_ZOMATO}`
   fetch(link)
     .then(r => r.json())
