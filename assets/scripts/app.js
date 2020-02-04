@@ -7,9 +7,11 @@
 const L_B_TICKETMASTER = 'https://app.ticketmaster.com/discovery/v2/events?'
 const K_TICKETMASTER = 'apikey=7elxdku9GGG5k8j0Xm8KWdANDgecHMV0'
 const S_DATE_ASC = 'sort=date,asc'
+const ID_INPUT_TEXT = 'input_text'
 
 //Let global declarations
 let listOfEvents = []
+let keywords = ''
 
 
 //Definition of Event object to store Ticketmaster events
@@ -81,3 +83,10 @@ function fetchTMEventList(keywords) {
         })
         .catch(e => console.error(e))
 }
+
+function getKeywords(id) {
+    keywords = document.getElementById('input_text').value
+    keywords = keywords.replace(/\s+/g, '+')
+    return keywords
+}
+
