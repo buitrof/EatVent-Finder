@@ -172,3 +172,5 @@ function addListenerToDocument() {
 }
 addListenerToDocument()
 initPagination()
+
+// document.getElementById('card-index').textContent = index
