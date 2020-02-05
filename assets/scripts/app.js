@@ -45,7 +45,7 @@ class Event {
         typeof venue.location === 'undefined' ? null : this.longitude = venue.location.longitude
         typeof venue.location === 'undefined' ? null : this.latitude = venue.location.latitude
         this.postalCode = venue.postalCode
-        //console.log(this)
+        //console.log(this.latitude)
     }
 
     //Returns is Event has both longitude and latitude
@@ -72,9 +72,11 @@ function fetchTMEventList(keywords) {
         .then(r => r.json())
         .then(eventList => {
             let elementsFound = parseInt(eventList.page.totalElements)
-            pagesFound = parseInt(eventList.page.totalPages)
+            pagesFound = parseInt(eventList.page.totalPages) - 1
+            //console.log(pagesFound)
             if (elementsFound > 0) {
                 let eventsJSON = eventList._embedded.events
+                document.getElementById('results-display').classList.remove('uk-hidden')
                 document.getElementById('search-results').innerHTML = ''
                 eventsJSON.forEach(event => {
                     listOfEvents.push(new Event(event))
@@ -118,12 +120,12 @@ function getKeywords(id) {
 
 //Updates pagination and results on click of previous button
 function onClickPrevious() {
-    if (currentPage > 0) {
+    if (currentPage >= 0) {
         currentPage--
     }
-    document.getElementById('current-page').value = currentPage
-    document.getElementById('current-page').innerText = currentPage
-    if (currentPage === 0) {
+    document.getElementById('current-page').value = currentPage + 1
+    document.getElementById('current-page').innerText = currentPage +1
+    if (currentPage  === 0) {
         document.getElementById('previous-page').classList.add('uk-invisible')
     }
     document.getElementById('next-page').classList.remove('uk-invisible')
@@ -135,8 +137,8 @@ function onClickNext() {
     if (currentPage < pagesFound) {
         currentPage++
     }
-    document.getElementById('current-page').value = currentPage
-    document.getElementById('current-page').innerText = currentPage
+    document.getElementById('current-page').value = currentPage + 1
+    document.getElementById('current-page').innerText = currentPage + 1
     if (currentPage === pagesFound) {
         document.getElementById('next-page').classList.add('uk-invisible')
     }
@@ -147,8 +149,8 @@ function onClickNext() {
 //Initilizes the paginaiton
 function initPagination() {
     currentPage = 0
-    document.getElementById('current-page').value = (currentPage + 1)
-    document.getElementById('current-page').innerText = (currentPage + 1)
+    document.getElementById('current-page').value = currentPage + 1
+    document.getElementById('current-page').innerText = currentPage + 1
     document.getElementById('previous-page').classList.add('uk-invisible')
 }
 
@@ -164,8 +166,9 @@ function addListenerToDocument() {
             fetchTMEventList(keywords)
             document.getElementById('input_text').value = ''
             document.getElementById('search-results').innerHTML = ``
+            initPagination()
         }
     })
 }
-initPagination()
 addListenerToDocument()
+initPagination()
