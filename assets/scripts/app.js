@@ -83,9 +83,9 @@ function fetchTMEventList(keywords) {
                     let eventElem = document.createElement('div')
                     eventElem.className = 'uk-card uk-card-hover uk-card-body uk-grid'
                     eventElem.innerHTML = `
-                    <img src="${event.images[0].url}" alt="Image" srcset="" class="card-image">
-                    <div>
-                    <h3 class="uk-card-title">${event.name}</h3>
+                    <img src="${event.images[0].url}" alt="Image" srcset="" class=" uk-card-media-left card-image">
+                    <div class="uk-width-xlarge">
+                    <h3 class="uk-card-title uk-text-break">${event.name}</h3>
                     <p><a href="${event.url}">Link</a></p>
                     <p>${event._embedded.venues[0].name}</p>
                     <p>${event.dates.start.localDate}</p>
