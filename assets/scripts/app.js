@@ -12,8 +12,8 @@ const ID_INPUT_TEXT = 'input_text'
 //Let global declarations
 let listOfEvents = []
 let keywords = ''
-let currentPage
-let pagesFound = 10
+let currentPage = 1
+let pagesFound
 
 //Definition of Event object to store Ticketmaster events
 class Event {
@@ -64,17 +64,17 @@ function getKeywords() {
 //Then sets them into listOfEvents array
 //in format word+word+word+....
 function fetchTMEventList(keywords) {
-    getKeywords()
-    let link = `${L_B_TICKETMASTER}locale=*&${S_DATE_ASC}&${K_TICKETMASTER}&keyword=${getKeywords()}&page=${1}&countryCode=US`
+    let link = `${L_B_TICKETMASTER}locale=*&${S_DATE_ASC}&${K_TICKETMASTER}&keyword=${keywords}&page=${currentPage}&countryCode=US`
     fetch(link)
         .then(r => r.json())
         .then(eventList => {
             let elementsFound = parseInt(eventList.page.totalElements)
-            console.log(eventList.page)
+            pagesFound = parseInt(eventList.page.totalPages)
             if (elementsFound > 0) {
                 let eventsJSON = eventList._embedded.events
+                document.getElementById('search-results').innerHTML = ''
                 eventsJSON.forEach(event => {
-                    console.log(event)
+                    //console.log(event)
                     listOfEvents.push(new Event(event))
                     let eventElem = document.createElement('div')
                     eventElem.className = 'uk-card uk-card-hover uk-card-body uk-grid'
@@ -110,10 +110,11 @@ function onClickPrevious() {
     }
     document.getElementById('current-page').value = currentPage
     document.getElementById('current-page').innerText = currentPage
-    if(currentPage === 1) {
+    if (currentPage === 1) {
         document.getElementById('previous-page').classList.add('uk-invisible')
     }
     document.getElementById('next-page').classList.remove('uk-invisible')
+    fetchTMEventList(keywords)
 }
 function onClickNext() {
     if (currentPage < pagesFound) {
@@ -125,6 +126,7 @@ function onClickNext() {
         document.getElementById('next-page').classList.add('uk-invisible')
     }
     document.getElementById('previous-page').classList.remove('uk-invisible')
+    fetchTMEventList(keywords)
 }
 function initPagination() {
     currentPage = 1
