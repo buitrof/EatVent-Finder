@@ -79,26 +79,10 @@ function fetchTMEventList(keywords) {
                 document.getElementById('results-display').classList.remove('uk-hidden')
                 document.getElementById('search-results').innerHTML = ''
                 eventsJSON.forEach(event => {
-                    listOfEvents.push(new Event(event))
-                    let eventElem = document.createElement('div')
-                    eventElem.className = 'uk-card uk-card-hover uk-card-body uk-grid'
-                    eventElem.setAttribute("id", `${event-[0-19]}`)
-                    eventElem.innerHTML = `
-                    <img src="${event.images[0].url}" alt="Image" srcset="" class="card-image">
-                    <a href="./restaurants.index.html">
-                    <div>
-                    <h3 class="uk-card-title">${event.name}</h3>
-                    <p><a href="${event.url}">Link</a></p>
-                    <p>${event._embedded.venues[0].name}</p>
-                    <p>${event.dates.start.localDate}</p>
-                    </div>
-                    </a>
-                    `
-                    index++
-                    document.getElementById('container').innerHTML = ''
-                    document.getElementById('search-results').append(eventElem)
-                    eventElem.setAttribute('id', 'item-' + index)
-                    console.log(eventElem)
+                    //console.log(event)
+                    let ev = new Event(event)
+                    listOfEvents.push(ev)
+                    buildEventCard(ev)
                 })
             } else {
                 console.log('Nothing found')
@@ -109,6 +93,26 @@ function fetchTMEventList(keywords) {
             }
         })
         .catch(e => console.error(e))
+}
+function buildEventCard(event) {
+    let eventElem = document.createElement('div')
+    eventElem.className = 'uk-card uk-card-hover uk-card-body uk-grid'
+    eventElem.innerHTML = `
+    <img src="${event.imageURL}" alt="Image" srcset="" class=" uk-card-media-left card-image">
+    <a href="./restaurants.index.html">
+    <div class="uk-width-xlarge">
+    <h3 class="uk-card-title uk-text-break">${event.name}</h3>
+    <p><a href="${event.url}">Link</a></p>
+    <p>${event.venueName}</p>
+    <p>${event.localDate}</p>
+    </div>
+    </a>
+    `
+    index++
+    document.getElementById('container').innerHTML = ''
+    document.getElementById('search-results').append(eventElem)
+    eventElem.setAttribute('id', 'item-' + index)
+    console.log(eventElem)
 }
 
 
