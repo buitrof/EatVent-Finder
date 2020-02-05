@@ -162,4 +162,3 @@ function addListenerToDocument() {
 }
 initPagination()
 addListenerToDocument()
-fetchTMEventList('nba')
