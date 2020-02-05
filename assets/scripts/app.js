@@ -79,20 +79,10 @@ function fetchTMEventList(keywords) {
                 document.getElementById('search-results').innerHTML = ''
                 eventsJSON.forEach(event => {
                     //console.log(event)
-                    listOfEvents.push(new Event(event))
-                    let eventElem = document.createElement('div')
-                    eventElem.className = 'uk-card uk-card-hover uk-card-body uk-grid'
-                    eventElem.innerHTML = `
-                    <img src="${event.images[0].url}" alt="Image" srcset="" class=" uk-card-media-left card-image">
-                    <div class="uk-width-xlarge">
-                    <h3 class="uk-card-title uk-text-break">${event.name}</h3>
-                    <p><a href="${event.url}">Link</a></p>
-                    <p>${event._embedded.venues[0].name}</p>
-                    <p>${event.dates.start.localDate}</p>
-                    </div>
-                    `
-                    document.getElementById('container').innerHTML = ''
-                    document.getElementById('search-results').append(eventElem)
+                    let ev = new Event(event)
+                    listOfEvents.push(ev)
+                    buildEventCard(ev)
+
                 })
             } else {
                 console.log('Nothing found')
@@ -102,6 +92,21 @@ function fetchTMEventList(keywords) {
             }
         })
         .catch(e => console.error(e))
+}
+function buildEventCard(event) {
+    let eventElem = document.createElement('div')
+    eventElem.className = 'uk-card uk-card-hover uk-card-body uk-grid'
+    eventElem.innerHTML = `
+    <img src="${event.imageURL}" alt="Image" srcset="" class=" uk-card-media-left card-image">
+    <div class="uk-width-xlarge">
+    <h3 class="uk-card-title uk-text-break">${event.name}</h3>
+    <p><a href="${event.url}">Link</a></p>
+    <p>${event.venueName}</p>
+    <p>${event.localDate}</p>
+    </div>
+    `
+    document.getElementById('container').innerHTML = ''
+    document.getElementById('search-results').append(eventElem)
 }
 
 
