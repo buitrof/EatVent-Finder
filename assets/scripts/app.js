@@ -54,6 +54,8 @@ class Event {
 
 }
 
+
+//Gets keywords from search bar
 function getKeywords() {
     keywords = document.getElementById(ID_INPUT_TEXT).value
     keywords = keywords.replace(/\s+/g, '+')
@@ -99,11 +101,15 @@ function fetchTMEventList(keywords) {
         })
         .catch(e => console.error(e))
 }
+
+
 function getKeywords(id) {
     keywords = document.getElementById('input_text').value
     keywords = keywords.replace(/\s+/g, '+')
     return keywords
 }
+
+//Updates pagination and results on click of previous button
 function onClickPrevious() {
     if (currentPage > 1) {
         currentPage--
@@ -116,6 +122,8 @@ function onClickPrevious() {
     document.getElementById('next-page').classList.remove('uk-invisible')
     fetchTMEventList(keywords)
 }
+
+//Updates pagination and results on click of next button
 function onClickNext() {
     if (currentPage < pagesFound) {
         currentPage++
@@ -128,26 +136,30 @@ function onClickNext() {
     document.getElementById('previous-page').classList.remove('uk-invisible')
     fetchTMEventList(keywords)
 }
+
+//Initilizes the paginaiton
 function initPagination() {
     currentPage = 1
     document.getElementById('current-page').value = currentPage
     document.getElementById('current-page').innerText = currentPage
     document.getElementById('previous-page').classList.add('uk-invisible')
 }
+
+//Adds event listener to page
 function addListenerToDocument() {
     document.addEventListener('click', ({ target }) => {
         if (target.id === "previous-btn") {
             onClickPrevious()
         } else if (target.id === 'next-btn') {
             onClickNext()
+        } else if (target.id === 'submit') {
+            getKeywords()
+            fetchTMEventList(keywords)
+            document.getElementById('input_text').value = ''
+            document.getElementById('search-results').innerHTML = ``
         }
     })
 }
 initPagination()
 addListenerToDocument()
-document.getElementById('submit').addEventListener('click', event => {
-    event.preventDefault()
-    fetchTMEventList()
-    document.getElementById('input_text').value = ''
-    document.getElementById('search-results').innerHTML = ``
-})
+fetchTMEventList('nba')
