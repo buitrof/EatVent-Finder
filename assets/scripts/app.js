@@ -64,7 +64,7 @@ function getKeywords() {
 //in format word+word+word+....
 function fetchTMEventList(keywords) {
     getKeywords()
-    let link = `${L_B_TICKETMASTER}locale=*&${S_DATE_ASC}&${K_TICKETMASTER}&keyword=${getKeywords()}&page=${1}&countryCode=US`
+    let link = `${L_B_TICKETMASTER}locale=*&${S_DATE_ASC}&${K_TICKETMASTER}&keyword=${getKeywords()}&page=${0}&countryCode=US`
     fetch(link)
         .then(r => r.json())
         .then(eventList => {
