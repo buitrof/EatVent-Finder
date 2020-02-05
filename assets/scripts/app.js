@@ -12,7 +12,7 @@ const ID_INPUT_TEXT = 'input_text'
 //Let global declarations
 let listOfEvents = []
 let keywords = ''
-let currentPage = 1
+let currentPage = 0
 let pagesFound
 
 //Definition of Event object to store Ticketmaster events
@@ -76,7 +76,6 @@ function fetchTMEventList(keywords) {
                 let eventsJSON = eventList._embedded.events
                 document.getElementById('search-results').innerHTML = ''
                 eventsJSON.forEach(event => {
-                    //console.log(event)
                     listOfEvents.push(new Event(event))
                     let eventElem = document.createElement('div')
                     eventElem.className = 'uk-card uk-card-hover uk-card-body uk-grid'
@@ -94,6 +93,7 @@ function fetchTMEventList(keywords) {
                 })
             } else {
                 console.log('Nothing found')
+                document.getElementById('container').innerHTML = ''
                 document.getElementById('search-results').innerHTML = `
                 <h3> Nothing found</h3>
                 `
@@ -111,12 +111,12 @@ function getKeywords(id) {
 
 //Updates pagination and results on click of previous button
 function onClickPrevious() {
-    if (currentPage > 1) {
+    if (currentPage > 0) {
         currentPage--
     }
     document.getElementById('current-page').value = currentPage
     document.getElementById('current-page').innerText = currentPage
-    if (currentPage === 1) {
+    if (currentPage === 0) {
         document.getElementById('previous-page').classList.add('uk-invisible')
     }
     document.getElementById('next-page').classList.remove('uk-invisible')
@@ -139,9 +139,9 @@ function onClickNext() {
 
 //Initilizes the paginaiton
 function initPagination() {
-    currentPage = 1
-    document.getElementById('current-page').value = currentPage
-    document.getElementById('current-page').innerText = currentPage
+    currentPage = 0
+    document.getElementById('current-page').value = (currentPage + 1)
+    document.getElementById('current-page').innerText = (currentPage + 1)
     document.getElementById('previous-page').classList.add('uk-invisible')
 }
 
