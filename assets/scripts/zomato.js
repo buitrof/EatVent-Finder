@@ -33,13 +33,30 @@ function getRestaurantChoices(latt, long) {
   fetch(link)
     .then(d => d.json())
     .then(restaurantsLink => {
-      console.log(restaurantsLink)
+      // console.log(restaurantsLink)
       let restaurantsFound = parseInt(restaurantsLink.restaurants.length)
-      //console.log(restaurantsFound)
+      // console.log(restaurantsFound)
       if (restaurantsFound > 0) {
         let restaurantsJSON = restaurantsLink.restaurants
         restaurantsJSON.forEach(restaurant => {
-          console.log(new Restaurant(restaurant.restaurant))
+          // console.log(new Restaurant(restaurant.restaurant))
+           let newRestaurant = function( )
+              
+            }
+          let restaurantResultElem = document.createElement('div')
+          restaurantResultElem.className = 'uk-card uk-card-hover uk-card-body uk-grid'
+          restaurantResultElem.innerHTML = `
+                <div>
+                  <img src="${newRestaurant.photos[0].photo.url}" alt="Image" srcset="" class="card-image">
+                  <h3 class="uk-card-title">${newRestaurant.name}</h3>
+                  <p>Rating: ${newRestaurant.user_rating.aggregate_rating}</p>
+                  <p>Highlights: ${newRestaurant.highlights}</p>
+                  <p>Cuisines: ${newRestaurant.cuisines}</p>
+                  <p>Address: ${newRestaurant.location.address}</p>
+                  <p>Phone: ${newRestaurant.phone_numbers}</p>
+                  </div>
+                    `
+          document.getElementById('search-results').append(restaurantResultElem)
         })
       } else {
         console.log('Nothing found')
@@ -47,9 +64,8 @@ function getRestaurantChoices(latt, long) {
     })
     .catch(e => console.error(e))
 
-restaurants.forEach(arr =>) {
-  var restaurant = 
-}
+
 }
 getRestaurantChoices('47.60577', '-122.329437')
+
 
