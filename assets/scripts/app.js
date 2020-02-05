@@ -12,7 +12,7 @@ const ID_INPUT_TEXT = 'input_text'
 //Let global declarations
 let listOfEvents = []
 let keywords = ''
-let currentPage = 1
+let currentPage = 0
 let pagesFound
 
 //Definition of Event object to store Ticketmaster events
@@ -44,7 +44,7 @@ class Event {
         typeof venue.location === 'undefined' ? null : this.longitude = venue.location.longitude
         typeof venue.location === 'undefined' ? null : this.latitude = venue.location.latitude
         this.postalCode = venue.postalCode
-        //console.log(this)
+        //console.log(this.latitude)
     }
 
     //Returns is Event has both longitude and latitude
@@ -71,9 +71,11 @@ function fetchTMEventList(keywords) {
         .then(r => r.json())
         .then(eventList => {
             let elementsFound = parseInt(eventList.page.totalElements)
-            pagesFound = parseInt(eventList.page.totalPages)
+            pagesFound = parseInt(eventList.page.totalPages) - 1
+            //console.log(pagesFound)
             if (elementsFound > 0) {
                 let eventsJSON = eventList._embedded.events
+                document.getElementById('results-display').classList.remove('uk-hidden')
                 document.getElementById('search-results').innerHTML = ''
                 eventsJSON.forEach(event => {
                     //console.log(event)
@@ -111,12 +113,12 @@ function getKeywords(id) {
 
 //Updates pagination and results on click of previous button
 function onClickPrevious() {
-    if (currentPage > 1) {
+    if (currentPage >= 0) {
         currentPage--
     }
-    document.getElementById('current-page').value = currentPage
-    document.getElementById('current-page').innerText = currentPage
-    if (currentPage === 1) {
+    document.getElementById('current-page').value = currentPage + 1
+    document.getElementById('current-page').innerText = currentPage +1
+    if (currentPage  === 0) {
         document.getElementById('previous-page').classList.add('uk-invisible')
     }
     document.getElementById('next-page').classList.remove('uk-invisible')
@@ -128,8 +130,8 @@ function onClickNext() {
     if (currentPage < pagesFound) {
         currentPage++
     }
-    document.getElementById('current-page').value = currentPage
-    document.getElementById('current-page').innerText = currentPage
+    document.getElementById('current-page').value = currentPage + 1
+    document.getElementById('current-page').innerText = currentPage + 1
     if (currentPage === pagesFound) {
         document.getElementById('next-page').classList.add('uk-invisible')
     }
@@ -139,9 +141,9 @@ function onClickNext() {
 
 //Initilizes the paginaiton
 function initPagination() {
-    currentPage = 1
-    document.getElementById('current-page').value = currentPage
-    document.getElementById('current-page').innerText = currentPage
+    currentPage = 0
+    document.getElementById('current-page').value = currentPage + 1
+    document.getElementById('current-page').innerText = currentPage + 1
     document.getElementById('previous-page').classList.add('uk-invisible')
 }
 
@@ -162,3 +164,4 @@ function addListenerToDocument() {
     })
 }
 addListenerToDocument()
+initPagination()
