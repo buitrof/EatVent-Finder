@@ -83,12 +83,14 @@ function fetchTMEventList(keywords) {
                     eventElem.setAttribute("id", `${event-[0-19]}`)
                     eventElem.innerHTML = `
                     <img src="${event.images[0].url}" alt="Image" srcset="" class="card-image">
+                    <a href="./restaurants.index.html">
                     <div>
                     <h3 class="uk-card-title">${event.name}</h3>
                     <p><a href="${event.url}">Link</a></p>
                     <p>${event._embedded.venues[0].name}</p>
                     <p>${event.dates.start.localDate}</p>
                     </div>
+                    </a>
                     `
                     index++
                     document.getElementById('container').innerHTML = ''
