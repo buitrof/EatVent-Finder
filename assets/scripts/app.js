@@ -11,8 +11,9 @@ const ID_INPUT_TEXT = 'input_text'
 
 //Let global declarations
 let listOfEvents = []
-let keywords
-
+let keywords = ''
+let currentPage
+let pagesFound = 10
 
 //Definition of Event object to store Ticketmaster events
 class Event {
@@ -69,7 +70,7 @@ function fetchTMEventList(keywords) {
         .then(r => r.json())
         .then(eventList => {
             let elementsFound = parseInt(eventList.page.totalElements)
-            //console.log(eventList.page)
+            console.log(eventList.page)
             if (elementsFound > 0) {
                 let eventsJSON = eventList._embedded.events
                 eventsJSON.forEach(event => {
@@ -97,7 +98,50 @@ function fetchTMEventList(keywords) {
         })
         .catch(e => console.error(e))
 }
-
+function getKeywords(id) {
+    keywords = document.getElementById('input_text').value
+    keywords = keywords.replace(/\s+/g, '+')
+    return keywords
+}
+function onClickPrevious() {
+    if (currentPage > 1) {
+        currentPage--
+    }
+    document.getElementById('current-page').value = currentPage
+    document.getElementById('current-page').innerText = currentPage
+    if(currentPage === 1) {
+        document.getElementById('previous-page').classList.add('uk-invisible')
+    }
+    document.getElementById('next-page').classList.remove('uk-invisible')
+}
+function onClickNext() {
+    if (currentPage < pagesFound) {
+        currentPage++
+    }
+    document.getElementById('current-page').value = currentPage
+    document.getElementById('current-page').innerText = currentPage
+    if (currentPage === pagesFound) {
+        document.getElementById('next-page').classList.add('uk-invisible')
+    }
+    document.getElementById('previous-page').classList.remove('uk-invisible')
+}
+function initPagination() {
+    currentPage = 1
+    document.getElementById('current-page').value = currentPage
+    document.getElementById('current-page').innerText = currentPage
+    document.getElementById('previous-page').classList.add('uk-invisible')
+}
+function addListenerToDocument() {
+    document.addEventListener('click', ({ target }) => {
+        if (target.id === "previous-btn") {
+            onClickPrevious()
+        } else if (target.id === 'next-btn') {
+            onClickNext()
+        }
+    })
+}
+initPagination()
+addListenerToDocument()
 document.getElementById('submit').addEventListener('click', event => {
     event.preventDefault()
     fetchTMEventList()
