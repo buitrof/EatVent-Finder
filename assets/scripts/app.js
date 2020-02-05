@@ -89,6 +89,7 @@ function fetchTMEventList(keywords) {
                     <p>${event.dates.start.localDate}</p>
                     </div>
                     `
+                    document.getElementById('container').innerHTML = ''
                     document.getElementById('search-results').append(eventElem)
                 })
             } else {
@@ -97,7 +98,6 @@ function fetchTMEventList(keywords) {
                 <h3> Nothing found</h3>
                 `
             }
-
         })
         .catch(e => console.error(e))
 }
