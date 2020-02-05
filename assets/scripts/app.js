@@ -70,7 +70,7 @@ function fetchTMEventList(keywords) {
         .then(r => r.json())
         .then(eventList => {
             let elementsFound = parseInt(eventList.page.totalElements)
-            //console.log(eventList.page)
+            console.log(eventList.page)
             if (elementsFound > 0) {
                 let eventsJSON = eventList._embedded.events
                 eventsJSON.forEach(event => {
@@ -99,7 +99,6 @@ function fetchTMEventList(keywords) {
         })
         .catch(e => console.error(e))
 }
-
 function getKeywords(id) {
     keywords = document.getElementById('input_text').value
     keywords = keywords.replace(/\s+/g, '+')

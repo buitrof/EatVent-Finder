@@ -1,3 +1,48 @@
+/* body style */
+body, html {
+  height: 100%;
+}
+* {
+  box-sizing: border-box;
+}
+.imgBackground{
+  background-image: url("./gallery-1452797650-photo-gallery-photo-4-2.jpg");
+  padding-top: 10px;
+  height: 100%; 
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.description{
+  font-family: Arial, Helvetica, sans-serif;
+ text-align: center;
+ margin: 25px;
+ color:white;
+ text-shadow:
+		-1px -2px 0 black,
+    2px -1px 0  black,
+		-2px 2px 0  black,
+		1px 2px 0  black;
+ font-size: 25px;
+ font-weight: 600;
+ border: 1px;
+}
+
+.logo{
+  display: block;
+  margin-top: 60px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 45%;
+  height: 45%;
+}
+
+.mainDescription{
+top:25%
+}
+
+/* nav style */
 .image {
     width: 50px;
     height: 50px;
@@ -6,4 +51,47 @@
 .card-image {
     width: 250px;
     height: 200px;
+}
+.uk-icon uk-margin-small-right{
+  font-size: 10px !important;
+}
+.uk-navbar-item {
+  min-height: 20px !important;
+}
+
+.uk-navbar-container {
+  background-color: #666;
+  padding-bottom: 20px;
+  margin-bottom: 0px;
+}
+#input_text[type="text"]
+{
+    font-size:15px;
+}
+.uk-navbar-item, .uk-navbar-nav>li>a, .uk-navbar-toggle{
+  min-height: 20px !important;
+   font-size: 20px !important;
+}
+
+
+@media (min-width:400px){ 
+
+.uk-navbar-item, .uk-navbar-nav>li>a, .uk-navbar-toggle{
+   font-size: 25px !important;
+}
+.uk-form-width-medium{
+  width: 400px;
+}
+#input_text[type="text"]
+{
+    font-size:20px;
+}
+.logo{
+  width: 300px;
+  height: 300px;
+}
+.image {
+    width: 90px;
+    height: 90px;
+}
 }
