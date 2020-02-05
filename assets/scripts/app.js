@@ -14,6 +14,7 @@ let listOfEvents = []
 let keywords = ''
 let currentPage = 0
 let pagesFound
+let index = 0
 
 //Definition of Event object to store Ticketmaster events
 class Event {
@@ -79,6 +80,7 @@ function fetchTMEventList(keywords) {
                     listOfEvents.push(new Event(event))
                     let eventElem = document.createElement('div')
                     eventElem.className = 'uk-card uk-card-hover uk-card-body uk-grid'
+                    eventElem.setAttribute("id", `${event-[0-19]}`)
                     eventElem.innerHTML = `
                     <img src="${event.images[0].url}" alt="Image" srcset="" class="card-image">
                     <div>
@@ -88,8 +90,11 @@ function fetchTMEventList(keywords) {
                     <p>${event.dates.start.localDate}</p>
                     </div>
                     `
+                    index++
                     document.getElementById('container').innerHTML = ''
                     document.getElementById('search-results').append(eventElem)
+                    eventElem.setAttribute('id', 'item-' + index)
+                    console.log(eventElem)
                 })
             } else {
                 console.log('Nothing found')
