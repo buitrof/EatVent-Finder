@@ -157,8 +157,8 @@ function addListenerToDocument() {
             fetchTMEventList(keywords)
             document.getElementById('input_text').value = ''
             document.getElementById('search-results').innerHTML = ``
+            initPagination()
         }
     })
 }
-initPagination()
 addListenerToDocument()
