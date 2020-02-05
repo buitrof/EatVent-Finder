@@ -4,7 +4,7 @@
 //B = Base
 //K = Key
 //S = Sort
-const L_B_TICKETMASTER = 'https://app.ticketmaster.com/discovery/v2/events?'
+const L_B_TICKETMASTER = 'https://app.ticketmaster.com/discovery/v2/events.json?'
 const K_TICKETMASTER = 'apikey=7elxdku9GGG5k8j0Xm8KWdANDgecHMV0'
 const S_DATE_ASC = 'sort=date,asc'
 const ID_INPUT_TEXT = 'input_text'
@@ -54,11 +54,18 @@ class Event {
 
 }
 
+function getKeywords() {
+    keywords = document.getElementById(ID_INPUT_TEXT).value
+    keywords = keywords.replace(/\s+/g, '+')
+    return keywords
+}
+
 //Fetches events from Ticketmaster based on keyword search
 //Then sets them into listOfEvents array
 //in format word+word+word+....
 function fetchTMEventList(keywords) {
-    let link = `${L_B_TICKETMASTER}locale=en-us&${S_DATE_ASC}&${K_TICKETMASTER}&keyword=${keywords}&page=${1}&countryCode=US`
+    getKeywords()
+    let link = `${L_B_TICKETMASTER}locale=*&${S_DATE_ASC}&${K_TICKETMASTER}&keyword=${getKeywords()}&page=${1}&countryCode=US`
     fetch(link)
         .then(r => r.json())
         .then(eventList => {
@@ -67,11 +74,26 @@ function fetchTMEventList(keywords) {
             if (elementsFound > 0) {
                 let eventsJSON = eventList._embedded.events
                 eventsJSON.forEach(event => {
-                    //console.log(event)
+                    console.log(event)
                     listOfEvents.push(new Event(event))
-                });
+                    let eventElem = document.createElement('div')
+                    eventElem.className = 'uk-card uk-card-hover uk-card-body uk-grid'
+                    eventElem.innerHTML = `
+                    <img src="${event.images[0].url}" alt="Image" srcset="" class="card-image">
+                    <div>
+                    <h3 class="uk-card-title">${event.name}</h3>
+                    <p><a href="${event.url}">Link</a></p>
+                    <p>${event._embedded.venues[0].name}</p>
+                    <p>${event.dates.start.localDate}</p>
+                    </div>
+                    `
+                    document.getElementById('search-results').append(eventElem)
+                })
             } else {
                 console.log('Nothing found')
+                document.getElementById('search-results').innerHTML = `
+                <h3> Nothing found</h3>
+                `
             }
 
         })
@@ -122,3 +144,9 @@ function addListenerToDocument() {
 }
 initPagination()
 addListenerToDocument()
+document.getElementById('submit').addEventListener('click', event => {
+    event.preventDefault()
+    fetchTMEventList()
+    document.getElementById('input_text').value = ''
+    document.getElementById('search-results').innerHTML = ``
+})
