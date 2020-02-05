@@ -87,6 +87,7 @@ function fetchTMEventList(keywords) {
                     <p>${event.dates.start.localDate}</p>
                     </div>
                     `
+                    document.getElementById('container').innerHTML = ''
                     document.getElementById('search-results').append(eventElem)
                 })
             } else {
