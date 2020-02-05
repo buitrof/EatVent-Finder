@@ -19,7 +19,7 @@ class Restaurant {
     this.longitude = null
     this.cuisines = restaurant.cuisines
     this.highlights = restaurant.highlights
-    this.user_rating = restaurant.user_rating
+    // this.user_rating = restaurant.user_rating
     this.photos = restaurant.photos
     //console.log(this)
   }
@@ -46,5 +46,10 @@ function getRestaurantChoices(latt, long) {
       }
     })
     .catch(e => console.error(e))
+
+restaurants.forEach(arr =>) {
+  var restaurant = 
+}
 }
 getRestaurantChoices('47.60577', '-122.329437')
+
