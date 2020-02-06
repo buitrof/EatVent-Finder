@@ -23,9 +23,6 @@ class Restaurant {
     this.photos = restaurant.photos
     //console.log(this)
   }
-
-
-
 }
 
 
