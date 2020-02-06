@@ -28,6 +28,7 @@ class Restaurant {
 
 }
 
+
 function getRestaurantChoices(latt, long) {
   let link = `${L_B_ZOMATO}lat=${latt}&lon=${long}&${S_RATING}&${K_ZOMATO}`
   fetch(link)
@@ -38,34 +39,36 @@ function getRestaurantChoices(latt, long) {
       // console.log(restaurantsFound)
       if (restaurantsFound > 0) {
         let restaurantsJSON = restaurantsLink.restaurants
-        restaurantsJSON.forEach(restaurant => {
-          // console.log(new Restaurant(restaurant.restaurant))
-           let newRestaurant = function( )
-              
-            }
-          let restaurantResultElem = document.createElement('div')
-          restaurantResultElem.className = 'uk-card uk-card-hover uk-card-body uk-grid'
-          restaurantResultElem.innerHTML = `
-                <div>
-                  <img src="${newRestaurant.photos[0].photo.url}" alt="Image" srcset="" class="card-image">
-                  <h3 class="uk-card-title">${newRestaurant.name}</h3>
-                  <p>Rating: ${newRestaurant.user_rating.aggregate_rating}</p>
-                  <p>Highlights: ${newRestaurant.highlights}</p>
-                  <p>Cuisines: ${newRestaurant.cuisines}</p>
-                  <p>Address: ${newRestaurant.location.address}</p>
-                  <p>Phone: ${newRestaurant.phone_numbers}</p>
-                  </div>
-                    `
-          document.getElementById('search-results').append(restaurantResultElem)
+        restaurantsJSON.forEach(({ restaurant }) => {
+          let rest = new Restaurant(restaurant)
+          listOfRest.push(rest)
+          BuildEventCard(rest)
         })
       } else {
         console.log('Nothing found')
       }
     })
     .catch(e => console.error(e))
-
-
 }
+
+function BuildEventCard(rest) {
+  console.log(rest)
+  let restaurantResultElem = document.createElement('div')
+  restaurantResultElem.className = 'uk-card uk-card-hover uk-card-body uk-grid'
+  restaurantResultElem.innerHTML = `
+            <div>
+                <img src="${rest.photos[0].photo.url}" alt="Image" srcset="" class="card-image">
+                <h3 class="uk-card-title">${rest.name}</h3>
+                <p>Rating: ${rest.user_rating.aggregate_rating}</p>
+                <p>Highlights: ${rest.highlights}</p>
+                <p>Cuisines: ${rest.cuisines}</p>
+                <p>Address: ${rest.address}</p>
+                <p>Phone: ${rest.phone_numbers}</p>
+                </div>
+                 `
+  document.getElementById('search-results').append(restaurantResultElem)
+}
+
+
+
 getRestaurantChoices('47.60577', '-122.329437')
-
-
