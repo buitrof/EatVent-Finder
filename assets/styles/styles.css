@@ -99,12 +99,13 @@ body, html {
 }
 
 .setup {
-    border-top: solid #ccc 3px;
-    border-bottom: solid #ccc 3px;
+    border-top: solid #ccc;
+    border-bottom: solid #ccc;
 }
 
 .setup:hover {
     cursor: pointer;
+    /* background-color: grey */
 }
 
 .hidden {
@@ -115,3 +116,11 @@ body, html {
     background-color: yellow;
     display: none;
 }
+
+/* .hide {
+    color: white;
+}
+
+.uk-card {
+    background-color: grey
+} */

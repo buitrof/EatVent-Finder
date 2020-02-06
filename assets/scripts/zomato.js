@@ -51,7 +51,7 @@ function getRestaurantChoices(latt, long) {
     .catch(e => console.error(e))
 }
 
-function BuildEventCard(rest) {
+function BuildRestCard(rest) {
   console.log(rest)
   let restaurantResultElem = document.createElement('div')
   restaurantResultElem.className = 'uk-card uk-card-hover uk-card-body uk-grid'
@@ -71,4 +71,4 @@ function BuildEventCard(rest) {
 
 
 
-// getRestaurantChoices('47.60577', '-122.329437')
+getRestaurantChoices('47.60577', '-122.329437')

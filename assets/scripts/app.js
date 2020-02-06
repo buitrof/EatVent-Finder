@@ -9,12 +9,20 @@ const K_TICKETMASTER = 'apikey=7elxdku9GGG5k8j0Xm8KWdANDgecHMV0'
 const S_DATE_ASC = 'sort=date,asc'
 const ID_INPUT_TEXT = 'input_text'
 
+const L_B_ZOMATO = 'https://developers.zomato.com/api/v2.1/search?'
+const K_ZOMATO = 'apikey=39e17219549ea152e0fb9205ede5e31f'
+const S_RATING = 'sort=rating'
+
 //Let global declarations
 let listOfEvents = []
 let keywords = ''
 let currentPage = 0
 let pagesFound
-let index = 0
+let index = -1
+
+let listOfRest = []
+let latt = ''
+let long = ''
 
 //Definition of Event object to store Ticketmaster events
 class Event {
@@ -55,6 +63,26 @@ class Event {
 
 }
 
+class Restaurant {
+
+    constructor(restaurant) {
+        this.name = restaurant.name
+        this.user_rating = restaurant.user_rating
+        this.address = restaurant.location.address
+        this.phone_numbers = restaurant.phone_numbers
+        this.latitude = null
+        this.longitude = null
+        this.cuisines = restaurant.cuisines
+        this.highlights = restaurant.highlights
+        // this.user_rating = restaurant.user_rating
+        this.photos = restaurant.photos
+        //console.log(this)
+    }
+
+
+
+}
+
 
 //Gets keywords from search bar
 function getKeywords() {
@@ -83,7 +111,7 @@ function fetchTMEventList(keywords) {
                     let ev = new Event(event)
                     listOfEvents.push(ev)
                     buildEventCard(ev, listOfEvents.length-1)
-                    getLocation(ev, listOfEvents.length-1)
+                    // getLocation(ev, listOfEvents.length-1)
                 })
             } else {
                 console.log('Nothing found')
@@ -107,15 +135,50 @@ function buildEventCard(event, id) {
     <p><a href="${event.url}">Link</a></p>
     <p>${event.venueName}</p>
     <p>${event.localDate}</p>
-    <button id="item-${index}">See top 10 restaurants</button>
+    <button value="${index}" id="item-${index}">See top 10 restaurants</button>
     </div>
     `
     document.getElementById('container').innerHTML = ''
     document.getElementById('search-results').append(eventElem)
 }
 
-function getLocation(event, id) {
-    console.log(event.longitude)
+function getRestaurantChoices(latt, long) {
+    let link = `${L_B_ZOMATO}lat=${latt}&lon=${long}&${S_RATING}&${K_ZOMATO}`
+    fetch(link)
+        .then(d => d.json())
+        .then(restaurantsLink => {
+            // console.log(restaurantsLink)
+            let restaurantsFound = parseInt(restaurantsLink.restaurants.length)
+            // console.log(restaurantsFound)
+            if (restaurantsFound > 0) {
+                let restaurantsJSON = restaurantsLink.restaurants
+                restaurantsJSON.forEach(({ restaurant }) => {
+                    let rest = new Restaurant(restaurant)
+                    listOfRest.push(rest)
+                    BuildRestCard(rest)
+                })
+            } else {
+                console.log('Nothing found')
+            }
+        })
+        .catch(e => console.error(e))
+}
+
+function BuildRestCard(rest) {
+    let restaurantResultElem = document.createElement('div')
+    restaurantResultElem.className = 'uk-card uk-card-hover uk-card-body uk-grid setup'
+    restaurantResultElem.innerHTML = `
+            <div>
+                <img src="${rest.photos[0].photo.url}" alt="Image" srcset="" class="card-image">
+                <h3 class="uk-card-title">${rest.name}</h3>
+                <p>Rating: ${rest.user_rating.aggregate_rating}</p>
+                <p>Highlights: ${rest.highlights}</p>
+                <p>Cuisines: ${rest.cuisines}</p>
+                <p>Address: ${rest.address}</p>
+                <p>Phone: ${rest.phone_numbers}</p>
+                </div>
+                 `
+    document.getElementById('search-results').append(restaurantResultElem)
 }
 
 
@@ -176,8 +239,13 @@ function addListenerToDocument() {
             document.getElementById('search-results').innerHTML = ``
             initPagination()
         } else if(regex.test(target.id)) {
-            console.log(target.id)
-        }
+            let cardIndex = parseInt(target.value)
+            latt = listOfEvents[cardIndex].latitude
+            long = listOfEvents[cardIndex].longitude
+            document.getElementById('contain-two').innerHTML = ''
+            // document.getElementById('search-results').classList.add("hide")
+            document.getElementById('search-results').innerHTML = getRestaurantChoices(latt, long)
+        } 
     })
 }
 addListenerToDocument()
