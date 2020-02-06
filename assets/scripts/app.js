@@ -96,7 +96,6 @@ function fetchTMEventList(keywords) {
 
 function buildEventCard(event, id) {
     let eventElem = document.createElement('div')
-    eventElem.setAttribute
     eventElem.className = 'uk-card uk-card-hover uk-card-body uk-grid'
     eventElem.innerHTML = `
     <img src="${event.imageURL}" alt="Image" srcset="" class=" uk-card-media-left card-image">
