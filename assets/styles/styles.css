@@ -55,8 +55,12 @@ body, html {
     height: 200px;
 }
 
-.uk-icon uk-margin-small-right {
-    font-size: 10px !important;
+.food-image {
+  width: 300px;
+  height: 250px;
+}
+.uk-icon uk-margin-small-right{
+  font-size: 10px !important;
 }
 
 .uk-navbar-item {
@@ -107,11 +111,4 @@ body, html {
     cursor: pointer;
 }
 
-.hidden {
-    text-align: center;
-    font-weight: bold;
-    border-top: solid black 3px;
-    border-bottom: solid black 3px;
-    background-color: yellow;
-    display: none;
 }

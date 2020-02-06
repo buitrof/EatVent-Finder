@@ -169,7 +169,24 @@ function BuildRestCard(rest) {
     restaurantResultElem.className = 'uk-card uk-card-hover uk-card-body uk-grid setup'
     restaurantResultElem.innerHTML = `
             <div>
-                <img src="${rest.photos[0].photo.url}" alt="Image" srcset="" class="card-image">
+              <div class="uk-position-relative uk-visible-toggle uk-light food-image " tabindex="-1" uk-slideshow>
+               <ul class="uk-slideshow-items food-image">
+               <li>
+                 <img data-src="${rest.photos[0].photo.url}" class="uk-card-media-left food-image" alt="" uk-cover uk-img="target: !ul > :last-child, !* +*">
+              </li>
+              <li>
+                 <img data-src="${rest.photos[1].photo.url}" class="uk-card-media-left card-image" alt="" uk-cover uk-img="target: !* -*, !* +*">
+               </li>
+               <li>
+                 <img data-src="${rest.photos[2].photo.url}" class="uk-card-media-left card-image" alt="" uk-cover uk-img="target: !* -*, !ul > :first-child">
+              </li>
+              <li>
+                 <img data-src="${rest.photos[3].photo.url}" class="uk-card-media-left card-image" alt="" uk-cover uk-img="target: !* -*, !ul > :first-child">
+              </li>
+              </ul>
+              <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+              <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+              </div>
                 <h3 class="uk-card-title">${rest.name}</h3>
                 <p>Rating: ${rest.user_rating.aggregate_rating}</p>
                 <p>Highlights: ${rest.highlights}</p>
