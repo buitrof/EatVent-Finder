@@ -19,7 +19,7 @@ class Restaurant {
     this.longitude = null
     this.cuisines = restaurant.cuisines
     this.highlights = restaurant.highlights
-    this.user_rating = restaurant.user_rating
+    // this.user_rating = restaurant.user_rating
     this.photos = restaurant.photos
     //console.log(this)
   }
@@ -28,18 +28,21 @@ class Restaurant {
 
 }
 
+
 function getRestaurantChoices(latt, long) {
   let link = `${L_B_ZOMATO}lat=${latt}&lon=${long}&${S_RATING}&${K_ZOMATO}`
   fetch(link)
     .then(d => d.json())
     .then(restaurantsLink => {
-      console.log(restaurantsLink)
+      // console.log(restaurantsLink)
       let restaurantsFound = parseInt(restaurantsLink.restaurants.length)
-      //console.log(restaurantsFound)
+      // console.log(restaurantsFound)
       if (restaurantsFound > 0) {
         let restaurantsJSON = restaurantsLink.restaurants
-        restaurantsJSON.forEach(restaurant => {
-          console.log(new Restaurant(restaurant.restaurant))
+        restaurantsJSON.forEach(({ restaurant }) => {
+          let rest = new Restaurant(restaurant)
+          listOfRest.push(rest)
+          BuildEventCard(rest)
         })
       } else {
         console.log('Nothing found')
@@ -47,4 +50,25 @@ function getRestaurantChoices(latt, long) {
     })
     .catch(e => console.error(e))
 }
+
+function BuildEventCard(rest) {
+  console.log(rest)
+  let restaurantResultElem = document.createElement('div')
+  restaurantResultElem.className = 'uk-card uk-card-hover uk-card-body uk-grid'
+  restaurantResultElem.innerHTML = `
+            <div>
+                <img src="${rest.photos[0].photo.url}" alt="Image" srcset="" class="card-image">
+                <h3 class="uk-card-title">${rest.name}</h3>
+                <p>Rating: ${rest.user_rating.aggregate_rating}</p>
+                <p>Highlights: ${rest.highlights}</p>
+                <p>Cuisines: ${rest.cuisines}</p>
+                <p>Address: ${rest.address}</p>
+                <p>Phone: ${rest.phone_numbers}</p>
+                </div>
+                 `
+  document.getElementById('search-results').append(restaurantResultElem)
+}
+
+
+
 getRestaurantChoices('47.60577', '-122.329437')

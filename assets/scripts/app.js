@@ -82,7 +82,8 @@ function fetchTMEventList(keywords) {
                     //console.log(event)
                     let ev = new Event(event)
                     listOfEvents.push(ev)
-                    buildEventCard(ev)
+                    buildEventCard(ev, listOfEvents.length-1)
+
                 })
             } else {
                 console.log('Nothing found')
@@ -94,7 +95,8 @@ function fetchTMEventList(keywords) {
         })
         .catch(e => console.error(e))
 }
-function buildEventCard(event) {
+
+function buildEventCard(event, id) {
     let eventElem = document.createElement('div')
     eventElem.className = 'uk-card uk-card-hover uk-card-body uk-grid'
     eventElem.innerHTML = `
