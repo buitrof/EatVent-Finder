@@ -93,6 +93,7 @@ function fetchTMEventList(keywords) {
         })
         .catch(e => console.error(e))
 }
+<<<<<<< HEAD
 function buildEventCard(event) {
     let eventElem = document.createElement('div')
     eventElem.className = 'uk-card uk-card-hover uk-card-body uk-grid'
@@ -110,6 +111,8 @@ function buildEventCard(event) {
 }
 
 
+=======
+>>>>>>> b409a0e0e5bdfbe51d0243d126c85a8763781cf3
 function getKeywords(id) {
     keywords = document.getElementById('input_text').value
     keywords = keywords.replace(/\s+/g, '+')
