@@ -44,8 +44,13 @@ top:25%
 
 /* nav style */
 .image {
-    width: 70px;
-    height: 70px;
+    width: 50px;
+    height: 50px;
+}
+
+.card-image {
+    width: 250px;
+    height: 200px;
 }
 .uk-icon uk-margin-small-right{
   font-size: 10px !important;
@@ -66,6 +71,19 @@ top:25%
 .uk-navbar-item, .uk-navbar-nav>li>a, .uk-navbar-toggle{
   min-height: 20px !important;
    font-size: 20px !important;
+}
+
+/* The grid: Four equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 25%;
+  padding: 15px;
+}
+
+/* Style the images inside the grid */
+.column img {
+  opacity: 1;
+  cursor: pointer;
 }
 
 
