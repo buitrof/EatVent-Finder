@@ -79,11 +79,11 @@ function fetchTMEventList(keywords) {
                 document.getElementById('results-display').classList.remove('uk-hidden')
                 document.getElementById('search-results').innerHTML = ''
                 eventsJSON.forEach(event => {
-                    //console.log(event)
+                    // console.log(event)
                     let ev = new Event(event)
                     listOfEvents.push(ev)
                     buildEventCard(ev, listOfEvents.length-1)
-
+                    getLocation(ev, listOfEvents.length-1)
                 })
             } else {
                 console.log('Nothing found')
@@ -97,24 +97,25 @@ function fetchTMEventList(keywords) {
 }
 
 function buildEventCard(event, id) {
+    index++
     let eventElem = document.createElement('div')
-    eventElem.className = 'uk-card uk-card-hover uk-card-body uk-grid'
+    eventElem.className = 'uk-card uk-card-hover uk-card-body uk-grid setup'
     eventElem.innerHTML = `
     <img src="${event.imageURL}" alt="Image" srcset="" class=" uk-card-media-left card-image">
-    <a href="./restaurants.index.html">
     <div class="uk-width-xlarge">
-    <h3 class="uk-card-title uk-text-break">${event.name}</h3>
+    <h3 class="uk-card-title uk-text-break event-id">${event.name}</h3>
     <p><a href="${event.url}">Link</a></p>
     <p>${event.venueName}</p>
     <p>${event.localDate}</p>
+    <button id="item-${index}">See top 10 restaurants</button>
     </div>
-    </a>
     `
-    index++
     document.getElementById('container').innerHTML = ''
     document.getElementById('search-results').append(eventElem)
-    eventElem.setAttribute('id', 'item-' + index)
-    console.log(eventElem)
+}
+
+function getLocation(event, id) {
+    console.log(event.longitude)
 }
 
 
@@ -163,6 +164,7 @@ function initPagination() {
 //Adds event listener to page
 function addListenerToDocument() {
     document.addEventListener('click', ({ target }) => {
+        let regex = /item-[0-9]/
         if (target.id === "previous-btn") {
             onClickPrevious()
         } else if (target.id === 'next-btn') {
@@ -173,10 +175,10 @@ function addListenerToDocument() {
             document.getElementById('input_text').value = ''
             document.getElementById('search-results').innerHTML = ``
             initPagination()
+        } else if(regex.test(target.id)) {
+            console.log(target.id)
         }
     })
 }
 addListenerToDocument()
 initPagination()
-
-// document.getElementById('card-index').textContent = index

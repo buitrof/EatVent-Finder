@@ -71,4 +71,4 @@ function BuildEventCard(rest) {
 
 
 
-getRestaurantChoices('47.60577', '-122.329437')
+// getRestaurantChoices('47.60577', '-122.329437')
