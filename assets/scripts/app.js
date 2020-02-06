@@ -243,7 +243,6 @@ function addListenerToDocument() {
             latt = listOfEvents[cardIndex].latitude
             long = listOfEvents[cardIndex].longitude
             document.getElementById('contain-two').innerHTML = ''
-            // document.getElementById('search-results').classList.add("hide")
             document.getElementById('search-results').innerHTML = getRestaurantChoices(latt, long)
         } 
     })

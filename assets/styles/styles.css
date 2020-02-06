@@ -105,7 +105,6 @@ body, html {
 
 .setup:hover {
     cursor: pointer;
-    /* background-color: grey */
 }
 
 .hidden {
@@ -116,11 +115,3 @@ body, html {
     background-color: yellow;
     display: none;
 }
-
-/* .hide {
-    color: white;
-}
-
-.uk-card {
-    background-color: grey
-} */
