@@ -73,20 +73,6 @@ top:25%
    font-size: 20px !important;
 }
 
-/* The grid: Four equal columns that floats next to each other */
-.column {
-  float: left;
-  width: 25%;
-  padding: 15px;
-}
-
-/* Style the images inside the grid */
-.column img {
-  opacity: 1;
-  cursor: pointer;
-}
-
-
 @media (min-width:400px){ 
 
 .uk-navbar-item, .uk-navbar-nav>li>a, .uk-navbar-toggle{

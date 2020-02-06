@@ -12,8 +12,8 @@ const ID_INPUT_TEXT = 'input_text'
 //Let global declarations
 let listOfEvents = []
 let keywords = ''
-let currentPage
-let pagesFound = 10
+let currentPage = 0
+let pagesFound
 
 //Definition of Event object to store Ticketmaster events
 class Event {
@@ -44,7 +44,7 @@ class Event {
         typeof venue.location === 'undefined' ? null : this.longitude = venue.location.longitude
         typeof venue.location === 'undefined' ? null : this.latitude = venue.location.latitude
         this.postalCode = venue.postalCode
-        //console.log(this)
+        //console.log(this.latitude)
     }
 
     //Returns is Event has both longitude and latitude
@@ -54,6 +54,8 @@ class Event {
 
 }
 
+
+//Gets keywords from search bar
 function getKeywords() {
     keywords = document.getElementById(ID_INPUT_TEXT).value
     keywords = keywords.replace(/\s+/g, '+')
@@ -64,30 +66,23 @@ function getKeywords() {
 //Then sets them into listOfEvents array
 //in format word+word+word+....
 function fetchTMEventList(keywords) {
-    getKeywords()
-    let link = `${L_B_TICKETMASTER}locale=*&${S_DATE_ASC}&${K_TICKETMASTER}&keyword=${getKeywords()}&page=${1}&countryCode=US`
+    let link = `${L_B_TICKETMASTER}locale=*&${S_DATE_ASC}&${K_TICKETMASTER}&keyword=${keywords}&page=${currentPage}&countryCode=US`
     fetch(link)
         .then(r => r.json())
         .then(eventList => {
             let elementsFound = parseInt(eventList.page.totalElements)
-            console.log(eventList.page)
+            pagesFound = parseInt(eventList.page.totalPages) - 1
+            //console.log(pagesFound)
             if (elementsFound > 0) {
                 let eventsJSON = eventList._embedded.events
+                document.getElementById('results-display').classList.remove('uk-hidden')
+                document.getElementById('search-results').innerHTML = ''
                 eventsJSON.forEach(event => {
-                    console.log(event)
-                    listOfEvents.push(new Event(event))
-                    let eventElem = document.createElement('div')
-                    eventElem.className = 'uk-card uk-card-hover uk-card-body uk-grid'
-                    eventElem.innerHTML = `
-                    <img src="${event.images[0].url}" alt="Image" srcset="" class="card-image">
-                    <div>
-                    <h3 class="uk-card-title">${event.name}</h3>
-                    <p><a href="${event.url}">Link</a></p>
-                    <p>${event._embedded.venues[0].name}</p>
-                    <p>${event.dates.start.localDate}</p>
-                    </div>
-                    `
-                    document.getElementById('search-results').append(eventElem)
+                    //console.log(event)
+                    let ev = new Event(event)
+                    listOfEvents.push(ev)
+                    buildEventCard(ev, listOfEvents.length-1)
+
                 })
             } else {
                 console.log('Nothing found')
@@ -95,57 +90,84 @@ function fetchTMEventList(keywords) {
                 <h3> Nothing found</h3>
                 `
             }
-
         })
         .catch(e => console.error(e))
 }
+
+function buildEventCard(event, id) {
+    let eventElem = document.createElement('div')
+    eventElem.className = 'uk-card uk-card-hover uk-card-body uk-grid'
+    eventElem.innerHTML = `
+    <img src="${event.imageURL}" alt="Image" srcset="" class=" uk-card-media-left card-image">
+    <div class="uk-width-xlarge">
+    <h3 class="uk-card-title uk-text-break">${event.name}</h3>
+    <p><a href="${event.url}">Link</a></p>
+    <p>${event.venueName}</p>
+    <p>${event.localDate}</p>
+    </div>
+    `
+    document.getElementById('container').innerHTML = ''
+    document.getElementById('search-results').append(eventElem)
+}
+
+
 function getKeywords(id) {
     keywords = document.getElementById('input_text').value
     keywords = keywords.replace(/\s+/g, '+')
     return keywords
 }
+
+//Updates pagination and results on click of previous button
 function onClickPrevious() {
-    if (currentPage > 1) {
+    if (currentPage >= 0) {
         currentPage--
     }
-    document.getElementById('current-page').value = currentPage
-    document.getElementById('current-page').innerText = currentPage
-    if(currentPage === 1) {
+    document.getElementById('current-page').value = currentPage + 1
+    document.getElementById('current-page').innerText = currentPage +1
+    if (currentPage  === 0) {
         document.getElementById('previous-page').classList.add('uk-invisible')
     }
     document.getElementById('next-page').classList.remove('uk-invisible')
+    fetchTMEventList(keywords)
 }
+
+//Updates pagination and results on click of next button
 function onClickNext() {
     if (currentPage < pagesFound) {
         currentPage++
     }
-    document.getElementById('current-page').value = currentPage
-    document.getElementById('current-page').innerText = currentPage
+    document.getElementById('current-page').value = currentPage + 1
+    document.getElementById('current-page').innerText = currentPage + 1
     if (currentPage === pagesFound) {
         document.getElementById('next-page').classList.add('uk-invisible')
     }
     document.getElementById('previous-page').classList.remove('uk-invisible')
+    fetchTMEventList(keywords)
 }
+
+//Initilizes the paginaiton
 function initPagination() {
-    currentPage = 1
-    document.getElementById('current-page').value = currentPage
-    document.getElementById('current-page').innerText = currentPage
+    currentPage = 0
+    document.getElementById('current-page').value = currentPage + 1
+    document.getElementById('current-page').innerText = currentPage + 1
     document.getElementById('previous-page').classList.add('uk-invisible')
 }
+
+//Adds event listener to page
 function addListenerToDocument() {
     document.addEventListener('click', ({ target }) => {
         if (target.id === "previous-btn") {
             onClickPrevious()
         } else if (target.id === 'next-btn') {
             onClickNext()
+        } else if (target.id === 'submit') {
+            getKeywords()
+            fetchTMEventList(keywords)
+            document.getElementById('input_text').value = ''
+            document.getElementById('search-results').innerHTML = ``
+            initPagination()
         }
     })
 }
-initPagination()
 addListenerToDocument()
-document.getElementById('submit').addEventListener('click', event => {
-    event.preventDefault()
-    fetchTMEventList()
-    document.getElementById('input_text').value = ''
-    document.getElementById('search-results').innerHTML = ``
-})
+initPagination()

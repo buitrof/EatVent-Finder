@@ -2,8 +2,6 @@
 <html lang="en">
 
 <head>
-
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -17,21 +15,17 @@
     <nav class="uk-navbar-container uk-margin uk-navbar">
         <div class="uk-navbar-left">
 
-            <a class="uk-navbar-item uk-logo image" href="#"><img
-                    src="./assets/eatVent logo.png"></a>
+            <a class="uk-navbar-item uk-logo" href="index.html"><img
+                    src="https://files.slack.com/files-pri/TS9L54NUC-FT407LAPL/eatvent_logo.png" class="image"></a>
 
             <ul class="uk-navbar-nav">
                 <li>
-                    <a href="#">
+                    <a href="index.html">
                         <span class="uk-icon uk-margin-small-right" uk-icon="icon: home"></span>
                         Home
                     </a>
                 </li>
             </ul>
-
-            <div class="uk-navbar-item">
-                <div>Some <a href="#">Link</a></div>
-            </div>
 
             <div class="uk-navbar-item">
                 <form action="javascript:void(0)">
@@ -43,30 +37,34 @@
 
         </div>
     </nav>
-    <div class="imgBackground">
-        <section class="mainDescription">
-            <img src="./assets/styles/eatVent logo.png" alt="logo" class="logo">
-            <div class="description">
-                <p>
-                    Welcome to EatVent, a site dedicated to showing you popular food choices for you to try before or
-                    after an event.
-                </p>
-                <p>
-                    To get started click the search option on the Nav Bar Enter what event you are looking for...
-                </p>
-            </div>
-        </section>
+
+    <div id="container">
+        <div id="main-page" class="imgBackground">
+            <section class="mainDescription">
+                <img src="./assets/styles/eatVent logo.png" alt="logo" class="logo">
+                <div class="description">
+                    <p>
+                        Welcome to EatVent, a site dedicated to showing you popular food choices for you to try before
+                        or after an event.
+                    </p>
+                    <p>
+                        To get started search for an event using the search bar!
+                    </p>
+                </div>
+            </section>
+        </div>
     </div>
 
-    <section id="search-results" class="">
+    <section id="results-display" class="">
         <ul class="uk-pagination uk-margin-small-left uk-margin-small-right">
-            <li id="previous-page" class="uk-invisible"><a href="#" id="previous-btn"><span class="uk-margin-small-right" uk-pagination-previous></span> Previous</a></li>
+            <li id="previous-page" class="uk-invisible"><a href="#" id="previous-btn">
+                    <span class="uk-margin-small-right" uk-pagination-previous></span> Previous</a></li>
             <li class="uk-width-expand uk-text-center" id="current-page" value="1">1</li>
-            <li id="next-page" class="uk-margin-auto-left"><a href="#" id="next-btn">Next <span class="uk-margin-small-left" uk-pagination-next></span></a></li id="next-page">
+            <li id="next-page" class="uk-margin-auto-left"><a href="#" id="next-btn">Next <span
+                        class="uk-margin-small-left" uk-pagination-next></span></a></li id="next-page">
         </ul>
+        <div id="search-results"></div>
     </section>
-    
-    
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.3.0/dist/js/uikit.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.3.0/dist/js/uikit-icons.min.js"></script>
     <script src="./assets/scripts/app.js"></script>
