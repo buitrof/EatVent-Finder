@@ -1,35 +1,34 @@
 /* body style */
+
 body, html {
   height: 100%;
 }
+
 * {
   box-sizing: border-box;
 }
-.imgBackground{
+
+.imgBackground {
   background-image: url("./background.jpg");
   padding-top: 10px;
-  height: 100%; 
+  height: 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-.description{
+.description {
   font-family: Arial, Helvetica, sans-serif;
- text-align: center;
- margin: 25px;
- color:white;
- text-shadow:
-		-1px -2px 0 black,
-    2px -1px 0  black,
-		-2px 2px 0  black,
-		1px 2px 0  black;
- font-size: 23px;
- font-weight: 600;
- border: 1px;
+  text-align: center;
+  margin: 25px;
+  color: white;
+  text-shadow: -1px -2px 0 black, 2px -1px 0 black, -2px 2px 0 black, 1px 2px 0 black;
+  font-size: 20px;
+  font-weight: 600;
+  border: 1px;
 }
 
-.logo{
+.logo {
   display: block;
   margin-top: 60px;
   margin-left: auto;
@@ -38,23 +37,30 @@ body, html {
   height: 45%;
 }
 
-.mainDescription{
-top:25%
+.mainDescription {
+  top: 25%
 }
 
 /* nav style */
+
 .image {
-    width: 50px;
-    height: 50px;
+  width: 50px;
+  height: 50px;
 }
 
 .card-image {
-    width: 250px;
-    height: 200px;
+  max-width: 500px;
+  width: 100%;
+  height: 200px;
 }
-.uk-icon uk-margin-small-right{
+.p-0 {
+  padding: 0px !important;
+}
+
+.uk-icon uk-margin-small-right {
   font-size: 10px !important;
 }
+
 .uk-navbar-item {
   min-height: 20px !important;
 }
@@ -64,33 +70,46 @@ top:25%
   padding-bottom: 20px;
   margin-bottom: 0px;
 }
-#input_text[type="text"]
-{
-    font-size:15px;
+
+#input_text[type="text"] {
+  font-size: 15px;
 }
-.uk-navbar-item, .uk-navbar-nav>li>a, .uk-navbar-toggle{
+
+.uk-navbar-item, .uk-navbar-nav>li>a, .uk-navbar-toggle {
   min-height: 20px !important;
-   font-size: 20px !important;
+  font-size: 20px !important;
 }
 
-@media (min-width:400px){ 
-
-.uk-navbar-item, .uk-navbar-nav>li>a, .uk-navbar-toggle{
-   font-size: 25px !important;
-}
-.uk-form-width-medium{
-  width: 400px;
-}
-#input_text[type="text"]
-{
-    font-size:20px;
-}
-.logo{
-  width: 300px;
-  height: 300px;
-}
-.image {
+@media (min-width:400px) {
+  .uk-navbar-item, .uk-navbar-nav>li>a, .uk-navbar-toggle {
+    font-size: 25px !important;
+  }
+  .uk-form-width-medium {
+    width: 400px;
+  }
+  #input_text[type="text"] {
+    font-size: 20px;
+  }
+  .logo {
+    width: 300px;
+    height: 300px;
+  }
+  .image {
     width: 90px;
     height: 90px;
-}
+  }
+  .card-image {
+    width: 250px;
+    height: 200px;
+  }
+  .description {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    margin: 25px;
+    color: white;
+    text-shadow: -1px -2px 0 black, 2px -1px 0 black, -2px 2px 0 black, 1px 2px 0 black;
+    font-size: 25px;
+    font-weight: 600;
+    border: 1px;
+  }
 }

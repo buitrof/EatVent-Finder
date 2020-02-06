@@ -81,7 +81,7 @@ function fetchTMEventList(keywords) {
                     //console.log(event)
                     let ev = new Event(event)
                     listOfEvents.push(ev)
-                    buildEventCard(ev, listOfEvents.length-1)
+                    buildEventCard(ev, listOfEvents.length - 1)
 
                 })
             } else {
@@ -96,7 +96,7 @@ function fetchTMEventList(keywords) {
 
 function buildEventCard(event, id) {
     let eventElem = document.createElement('div')
-    eventElem.className = 'uk-card uk-card-hover uk-card-body uk-grid'
+    eventElem.className = 'uk-card uk-card-hover uk-card-body uk-grid p-0'
     eventElem.innerHTML = `
     <img src="${event.imageURL}" alt="Image" srcset="" class=" uk-card-media-left card-image">
     <div class="uk-width-xlarge">
@@ -123,8 +123,8 @@ function onClickPrevious() {
         currentPage--
     }
     document.getElementById('current-page').value = currentPage + 1
-    document.getElementById('current-page').innerText = currentPage +1
-    if (currentPage  === 0) {
+    document.getElementById('current-page').innerText = currentPage + 1
+    if (currentPage === 0) {
         document.getElementById('previous-page').classList.add('uk-invisible')
     }
     document.getElementById('next-page').classList.remove('uk-invisible')
