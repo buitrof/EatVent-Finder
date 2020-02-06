@@ -81,7 +81,7 @@ function fetchTMEventList(keywords) {
                     //console.log(event)
                     let ev = new Event(event)
                     listOfEvents.push(ev)
-                    buildEventCard(ev)
+                    buildEventCard(ev, listOfEvents.length-1)
 
                 })
             } else {
@@ -93,9 +93,10 @@ function fetchTMEventList(keywords) {
         })
         .catch(e => console.error(e))
 }
-<<<<<<< HEAD
-function buildEventCard(event) {
+
+function buildEventCard(event, id) {
     let eventElem = document.createElement('div')
+    eventElem.setAttribute
     eventElem.className = 'uk-card uk-card-hover uk-card-body uk-grid'
     eventElem.innerHTML = `
     <img src="${event.imageURL}" alt="Image" srcset="" class=" uk-card-media-left card-image">
@@ -111,8 +112,6 @@ function buildEventCard(event) {
 }
 
 
-=======
->>>>>>> b409a0e0e5bdfbe51d0243d126c85a8763781cf3
 function getKeywords(id) {
     keywords = document.getElementById('input_text').value
     keywords = keywords.replace(/\s+/g, '+')
