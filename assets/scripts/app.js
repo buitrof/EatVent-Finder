@@ -235,6 +235,7 @@ function initPagination() {
     document.getElementById('current-page').value = currentPage + 1
     document.getElementById('current-page').innerText = currentPage + 1
     document.getElementById('previous-page').classList.add('uk-invisible')
+    document.getElementById('contain-two').classList.remove('uk-invisible')
 }
 
 //Adds event listener to page
@@ -263,3 +264,4 @@ function addListenerToDocument() {
 }
 addListenerToDocument()
 initPagination()
+document.getElementById('contain-two').classList.add('uk-invisible')
