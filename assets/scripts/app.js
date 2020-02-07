@@ -9,11 +9,20 @@ const K_TICKETMASTER = 'apikey=7elxdku9GGG5k8j0Xm8KWdANDgecHMV0'
 const S_DATE_ASC = 'sort=date,asc'
 const ID_INPUT_TEXT = 'input_text'
 
+const L_B_ZOMATO = 'https://developers.zomato.com/api/v2.1/search?'
+const K_ZOMATO = 'apikey=39e17219549ea152e0fb9205ede5e31f'
+const S_RATING = 'sort=rating'
+
 //Let global declarations
 let listOfEvents = []
 let keywords = ''
 let currentPage = 0
 let pagesFound
+let index = -1
+
+let listOfRest = []
+let latt = ''
+let long = ''
 
 //Definition of Event object to store Ticketmaster events
 class Event {
@@ -54,6 +63,26 @@ class Event {
 
 }
 
+class Restaurant {
+
+    constructor(restaurant) {
+        this.name = restaurant.name
+        this.user_rating = restaurant.user_rating
+        this.address = restaurant.location.address
+        this.phone_numbers = restaurant.phone_numbers
+        this.latitude = null
+        this.longitude = null
+        this.cuisines = restaurant.cuisines
+        this.highlights = restaurant.highlights
+        // this.user_rating = restaurant.user_rating
+        this.photos = restaurant.photos
+        //console.log(this)
+    }
+
+
+
+}
+
 
 //Gets keywords from search bar
 function getKeywords() {
@@ -78,14 +107,15 @@ function fetchTMEventList(keywords) {
                 document.getElementById('results-display').classList.remove('uk-hidden')
                 document.getElementById('search-results').innerHTML = ''
                 eventsJSON.forEach(event => {
-                    //console.log(event)
+                    // console.log(event)
                     let ev = new Event(event)
                     listOfEvents.push(ev)
                     buildEventCard(ev, listOfEvents.length-1)
-
+                    // getLocation(ev, listOfEvents.length-1)
                 })
             } else {
                 console.log('Nothing found')
+                document.getElementById('container').innerHTML = ''
                 document.getElementById('search-results').innerHTML = `
                 <h3> Nothing found</h3>
                 `
@@ -95,19 +125,78 @@ function fetchTMEventList(keywords) {
 }
 
 function buildEventCard(event, id) {
+    index++
     let eventElem = document.createElement('div')
-    eventElem.className = 'uk-card uk-card-hover uk-card-body uk-grid'
+    eventElem.className = 'uk-card uk-card-hover uk-card-body uk-grid setup'
     eventElem.innerHTML = `
     <img src="${event.imageURL}" alt="Image" srcset="" class=" uk-card-media-left card-image">
     <div class="uk-width-xlarge">
-    <h3 class="uk-card-title uk-text-break">${event.name}</h3>
+    <h3 class="uk-card-title uk-text-break event-id">${event.name}</h3>
     <p><a href="${event.url}">Link</a></p>
     <p>${event.venueName}</p>
     <p>${event.localDate}</p>
+    <button value="${index}" id="item-${index}">See top 10 restaurants</button>
     </div>
     `
     document.getElementById('container').innerHTML = ''
     document.getElementById('search-results').append(eventElem)
+}
+
+function getRestaurantChoices(latt, long) {
+    let link = `${L_B_ZOMATO}lat=${latt}&lon=${long}&${S_RATING}&${K_ZOMATO}`
+    fetch(link)
+        .then(d => d.json())
+        .then(restaurantsLink => {
+            // console.log(restaurantsLink)
+            let restaurantsFound = parseInt(restaurantsLink.restaurants.length)
+            // console.log(restaurantsFound)
+            if (restaurantsFound > 0) {
+                let restaurantsJSON = restaurantsLink.restaurants
+                restaurantsJSON.forEach(({ restaurant }) => {
+                    let rest = new Restaurant(restaurant)
+                    listOfRest.push(rest)
+
+                    BuildRestCard(rest)
+                })
+            } else {
+                console.log('Nothing found')
+            }
+        })
+        .catch(e => console.error(e))
+}
+
+function BuildRestCard(rest) {
+    let restaurantResultElem = document.createElement('div')
+    restaurantResultElem.className = 'uk-card uk-card-hover uk-card-body uk-grid setup'
+    restaurantResultElem.innerHTML = `
+            <div>
+              <div class="uk-position-relative uk-visible-toggle uk-light food-image " tabindex="-1" uk-slideshow>
+               <ul class="uk-slideshow-items food-image">
+               <li>
+                 <img data-src="${rest.photos[0].photo.url}" class="uk-card-media-left food-image" alt="" uk-cover uk-img="target: !ul > :last-child, !* +*">
+              </li>
+              <li>
+                 <img data-src="${rest.photos[1].photo.url}" class="uk-card-media-left card-image" alt="" uk-cover uk-img="target: !* -*, !* +*">
+               </li>
+               <li>
+                 <img data-src="${rest.photos[2].photo.url}" class="uk-card-media-left card-image" alt="" uk-cover uk-img="target: !* -*, !ul > :first-child">
+              </li>
+              <li>
+                 <img data-src="${rest.photos[3].photo.url}" class="uk-card-media-left card-image" alt="" uk-cover uk-img="target: !* -*, !ul > :first-child">
+              </li>
+              </ul>
+              <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+              <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+              </div>
+                <h3 class="uk-card-title">${rest.name}</h3>
+                <p>Rating: ${rest.user_rating.aggregate_rating}</p>
+                <p>Highlights: ${rest.highlights}</p>
+                <p>Cuisines: ${rest.cuisines}</p>
+                <p>Address: ${rest.address}</p>
+                <p>Phone: ${rest.phone_numbers}</p>
+                </div>
+                 `
+    document.getElementById('search-results').append(restaurantResultElem)
 }
 
 
@@ -123,8 +212,8 @@ function onClickPrevious() {
         currentPage--
     }
     document.getElementById('current-page').value = currentPage + 1
-    document.getElementById('current-page').innerText = currentPage +1
-    if (currentPage  === 0) {
+    document.getElementById('current-page').innerText = currentPage + 1
+    if (currentPage === 0) {
         document.getElementById('previous-page').classList.add('uk-invisible')
     }
     document.getElementById('next-page').classList.remove('uk-invisible')
@@ -156,6 +245,7 @@ function initPagination() {
 //Adds event listener to page
 function addListenerToDocument() {
     document.addEventListener('click', ({ target }) => {
+        let regex = /item-[0-9]/
         if (target.id === "previous-btn") {
             onClickPrevious()
         } else if (target.id === 'next-btn') {
@@ -166,7 +256,14 @@ function addListenerToDocument() {
             document.getElementById('input_text').value = ''
             document.getElementById('search-results').innerHTML = ``
             initPagination()
-        }
+        } else if(regex.test(target.id)) {
+            let cardIndex = parseInt(target.value)
+            latt = listOfEvents[cardIndex].latitude
+            long = listOfEvents[cardIndex].longitude
+            document.getElementById('contain-two').innerHTML = ''
+            document.getElementById('search-results').innerHTML = ''
+            getRestaurantChoices(latt, long)
+        } 
     })
 }
 addListenerToDocument()
