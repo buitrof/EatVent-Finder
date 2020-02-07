@@ -146,13 +146,16 @@ function buildEventCard(event, id) {
     eventElem.innerHTML =
         `
     <div class="uk-card-media-left uk-cover-container">
-        <img src="${event.imageURL}" alt="" class="card-image" uk-cover>
+        <img src="${event.imageURL}" alt="Event Image" class="card-image" uk-cover>
         <canvas width="500" height="400"></canvas>
     </div>
     <div>
         <div class="uk-card-body">
             <h3 class="uk-card-title">${event.name}</h3>
-            <p>${'content'}</p>
+            <p><a href="${event.url}">Link</a></p>
+            <p>${event.venueName}</p>
+            <p>${event.localDate}</p>
+            <button value="${index}" a class="uk-button uk-button-default" id="item-${index}">See top 10 restaurants</button>
         </div>
     </div>
     `
@@ -166,7 +169,7 @@ function getRestaurantChoices(latt, long) {
     fetch(link)
         .then(d => d.json())
         .then(restaurantsLink => {
-            // console.log(restaurantsLink)
+            console.log(restaurantsLink)
             let restaurantsFound = parseInt(restaurantsLink.restaurants.length)
             // console.log(restaurantsFound)
             if (restaurantsFound > 0) {
@@ -186,35 +189,35 @@ function getRestaurantChoices(latt, long) {
 
 function BuildRestCard(rest) {
     let restaurantResultElem = document.createElement('div')
-    restaurantResultElem.className = 'uk-card uk-card-hover uk-card-body uk-grid setup'
+    restaurantResultElem.className = 'uk-card uk-card-default uk-button uk-grid-collapse uk-child-width-1-2@s uk-margin'
+    restaurantResultElem.setAttribute('uk-grid', '')
+    console.log(rest.photos)
     restaurantResultElem.innerHTML = `
-            <div>
-              <div class="uk-position-relative uk-visible-toggle uk-light food-image " tabindex="-1" uk-slideshow>
-               <ul class="uk-slideshow-items food-image">
-               <li>
-                 <img data-src="${rest.photos[0].photo.url}" class="uk-card-media-left food-image" alt="" uk-cover uk-img="target: !ul > :last-child, !* +*">
-              </li>
-              <li>
-                 <img data-src="${rest.photos[1].photo.url}" class="uk-card-media-left card-image" alt="" uk-cover uk-img="target: !* -*, !* +*">
-               </li>
-               <li>
-                 <img data-src="${rest.photos[2].photo.url}" class="uk-card-media-left card-image" alt="" uk-cover uk-img="target: !* -*, !ul > :first-child">
-              </li>
-              <li>
-                 <img data-src="${rest.photos[3].photo.url}" class="uk-card-media-left card-image" alt="" uk-cover uk-img="target: !* -*, !ul > :first-child">
-              </li>
-              </ul>
-              <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
-              <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
-              </div>
+    <div class="uk-card-media-left uk-cover-container ">
+        <div class="uk-position-relative uk-visible-toggle uk-light food-image " tabindex="-1" uk-slideshow>
+        <ul class="uk-slideshow-items food-image">
+         ${
+        rest.photos.map(({ photo }) => {
+            return `
+            <li>
+            <img data-src="${photo.url}" class="uk-card-media-left food-image" alt="Restaurant Image" uk-cover uk-img="target: !ul > :last-child, !* +*">
+            </li> `})
+            }
+        </ul>
+        <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+        <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+    </div>
+    </div>    
+            <div class="uk-card-body">
                 <h3 class="uk-card-title">${rest.name}</h3>
                 <p>Rating: ${rest.user_rating.aggregate_rating}</p>
                 <p>Highlights: ${rest.highlights}</p>
                 <p>Cuisines: ${rest.cuisines}</p>
                 <p>Address: ${rest.address}</p>
                 <p>Phone: ${rest.phone_numbers}</p>
-                </div>
-                 `
+            </div>    
+        </div>
+         `
     document.getElementById('search-results').append(restaurantResultElem)
 }
 
@@ -259,6 +262,7 @@ function initPagination() {
     document.getElementById('current-page').value = currentPage + 1
     document.getElementById('current-page').innerText = currentPage + 1
     document.getElementById('previous-page').classList.add('uk-invisible')
+    document.getElementById('contain-two').classList.remove('uk-invisible')
 }
 
 //Adds event listener to page
@@ -288,3 +292,4 @@ function addListenerToDocument() {
 }
 addListenerToDocument()
 initPagination()
+document.getElementById('contain-two').classList.add('uk-invisible')

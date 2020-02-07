@@ -8,6 +8,7 @@
     <title>EatVent-Finder</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.3.0/dist/css/uikit.min.css" />
     <link rel="stylesheet" href="./assets/styles/styles.css">
+    <link rel="icon" href="./assets/styles/circle_logo.png">
 </head>
 
 <body>
@@ -48,6 +49,7 @@
                     </p>
                     <p>
                         To get started, search for an event using the search bar! 
+                     <br> 
                      <br>Once you have found it, find a place to eat nearby
                     </p>
                 </div>
@@ -55,7 +57,7 @@
         </div>
     </div>
 
-    <section id="results-display" class="">
+    <section id="results-display" class="uk-invisible">
         <div id="contain-two">
             <ul class="uk-pagination uk-margin-small-left uk-margin-small-right">
                 <li id="previous-page" class="uk-invisible"><a href="#" id="previous-btn">
@@ -64,10 +66,11 @@
                 <li id="next-page" class="uk-margin-auto-left"><a href="#" id="next-btn">Next <span
                             class="uk-margin-small-left" uk-pagination-next></span></a></li id="next-page">
             </ul>
-        </div>
-    
+        </div> 
     </section>
+
     <div id="search-results"></div>
+
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.3.0/dist/js/uikit.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.3.0/dist/js/uikit-icons.min.js"></script>
     <script src="./assets/scripts/app.js"></script>
