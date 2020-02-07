@@ -211,8 +211,8 @@ function onClickPrevious() {
         currentPage--
     }
     document.getElementById('current-page').value = currentPage + 1
-    document.getElementById('current-page').innerText = currentPage +1
-    if (currentPage  === 0) {
+    document.getElementById('current-page').innerText = currentPage + 1
+    if (currentPage === 0) {
         document.getElementById('previous-page').classList.add('uk-invisible')
     }
     document.getElementById('next-page').classList.remove('uk-invisible')
