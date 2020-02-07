@@ -152,7 +152,10 @@ function buildEventCard(event, id) {
     <div>
         <div class="uk-card-body">
             <h3 class="uk-card-title">${event.name}</h3>
-            <p>${'content'}</p>
+            <p><a href="${event.url}">Link</a></p>
+            <p>${event.venueName}</p>
+            <p>${event.localDate}</p>
+            <button value="${index}" a class="uk-button uk-button-default" id="item-${index}">See top 10 restaurants</button>
         </div>
     </div>
     `
