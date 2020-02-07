@@ -10,7 +10,6 @@ body, html {
 
 .imgBackground {
   background-image: url("./background.jpg");
-  padding-top: 10px;
   height: 100vh; 
   background-position: center;
   background-repeat: no-repeat;
@@ -29,12 +28,11 @@ body, html {
 }
 
 .logo {
-    display: block;
-    margin-top: 60px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 45%;
-    height: 45%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 45%;
+  height: 45%;
 }
 
 .mainDescription {
@@ -69,9 +67,8 @@ body, html {
 }
 
 .uk-navbar-container {
-    background-color: #666;
-    padding-bottom: 20px;
-    margin-bottom: 0px;
+  background-color: #666;
+  margin-bottom: 0px;
 }
 
 #input_text[type="text"] {

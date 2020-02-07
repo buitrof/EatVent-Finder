@@ -191,6 +191,7 @@ function BuildRestCard(rest) {
     let restaurantResultElem = document.createElement('div')
     restaurantResultElem.className = 'uk-card uk-card-default uk-button uk-grid-collapse uk-child-width-1-2@s uk-margin'
     restaurantResultElem.setAttribute('uk-grid', '')
+    console.log(rest.photos)
     restaurantResultElem.innerHTML = `
     <div class="uk-card-media-left uk-cover-container ">
         <div class="uk-position-relative uk-visible-toggle uk-light food-image " tabindex="-1" uk-slideshow>
