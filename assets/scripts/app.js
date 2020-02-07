@@ -189,7 +189,6 @@ function BuildRestCard(rest) {
               <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
               </div>
                 <h3 class="uk-card-title">${rest.name}     <span class="uk-badge">${rest.user_rating.aggregate_rating}</span></h3>
-
                 <p>Highlights: ${rest.highlights}</p>
                 <p>Cuisines: ${rest.cuisines}</p>
                 <p>Address: ${rest.address}</p>
