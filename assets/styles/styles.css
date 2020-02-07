@@ -48,6 +48,9 @@ body, html {
     height: 50px;
 }
 
+.card-image {
+  max-width: 500px;
+}
 .p-0 {
     padding: 0px !important;
 }
@@ -75,20 +78,38 @@ body, html {
     font-size: 20px !important;
 }
 
-/* card style */
+@media (min-width:400px) {
+  .uk-navbar-item, .uk-navbar-nav>li>a, .uk-navbar-toggle {
+    font-size: 25px !important;
+  }
+  .uk-form-width-medium {
+    width: 400px;
+  }
+  #input_text[type="text"] {
+    font-size: 20px;
+  }
+  .logo {
+    width: 300px;
+    height: 300px;
+  }
+  .image {
+    width: 90px;
+    height: 90px;
+  }
 
-.food-image {
-    width: 600px;
-    height: 425px;
+  .description {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    margin: 25px;
+    color: white;
+    text-shadow: -1px -2px 0 black, 2px -1px 0 black, -2px 2px 0 black, 1px 2px 0 black;
+    font-size: 25px;
+    font-weight: 600;
+    border: 1px;
+  }
 }
 
-.card-image {
-    max-width: 500px;
-    width: 100%;
-    max-height: 350px;
-}
-
-@media (max-width:400px) {
+/* @media (max-width:400px) {
     .uk-navbar-item, .uk-navbar-nav>li>a, .uk-navbar-toggle {
         font-size: 25px !important;
     }
@@ -134,4 +155,4 @@ body, html {
         max-width: 300px;
         max-height: 200px;
     }
-}
+} */
