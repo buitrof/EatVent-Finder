@@ -155,6 +155,7 @@ function getRestaurantChoices(latt, long) {
                 restaurantsJSON.forEach(({ restaurant }) => {
                     let rest = new Restaurant(restaurant)
                     listOfRest.push(rest)
+
                     BuildRestCard(rest)
                 })
             } else {
@@ -260,7 +261,8 @@ function addListenerToDocument() {
             latt = listOfEvents[cardIndex].latitude
             long = listOfEvents[cardIndex].longitude
             document.getElementById('contain-two').innerHTML = ''
-            document.getElementById('search-results').innerHTML = getRestaurantChoices(latt, long)
+            document.getElementById('search-results').innerHTML = ''
+            getRestaurantChoices(latt, long)
         } 
     })
 }
