@@ -147,7 +147,7 @@ function getRestaurantChoices(latt, long) {
     fetch(link)
         .then(d => d.json())
         .then(restaurantsLink => {
-            // console.log(restaurantsLink)
+            console.log(restaurantsLink)
             let restaurantsFound = parseInt(restaurantsLink.restaurants.length)
             // console.log(restaurantsFound)
             if (restaurantsFound > 0) {
@@ -171,7 +171,7 @@ function BuildRestCard(rest) {
     restaurantResultElem.innerHTML = `
             <div>
               <div class="uk-position-relative uk-visible-toggle uk-light food-image " tabindex="-1" uk-slideshow>
-               <ul class="uk-slideshow-items food-image">
+               <ul id="slideshow" class="uk-slideshow-items">
                <li>
                  <img data-src="${rest.photos[0].photo.url}" class="uk-card-media-left food-image" alt="" uk-cover uk-img="target: !ul > :last-child, !* +*">
               </li>
