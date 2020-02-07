@@ -110,7 +110,7 @@ function fetchTMEventList(keywords) {
                     // console.log(event)
                     let ev = new Event(event)
                     listOfEvents.push(ev)
-                    buildEventCard(ev, listOfEvents.length-1)
+                    buildEventCard(ev, listOfEvents.length - 1)
                     // getLocation(ev, listOfEvents.length-1)
                 })
             } else {
@@ -164,26 +164,33 @@ function getRestaurantChoices(latt, long) {
         })
         .catch(e => console.error(e))
 }
+// function restaurantPictures() {
+//     let foodPictureElem = document.createElement('img')
+//     foodPictureElem.className = 'uk-card-media-left food-image'
+//     foodPictureElem.alt = 'uk-cover uk-img="target: !ul > :last-child, !* +*'
+//     foodPictureElem.innerHTML = `
+//         < img data-src="${}">`
+
+//     let
+
+// }
+
+
 
 function BuildRestCard(rest) {
     let restaurantResultElem = document.createElement('div')
     restaurantResultElem.className = 'uk-card uk-card-hover uk-card-body uk-grid setup'
     restaurantResultElem.innerHTML = `
-            <div>
-              <div class="uk-position-relative uk-visible-toggle uk-light food-image " tabindex="-1" uk-slideshow>
-               <ul class="uk-slideshow-items food-image">
-               <li>
-                 <img data-src="${rest.photos[0].photo.url}" class="uk-card-media-left food-image" alt="" uk-cover uk-img="target: !ul > :last-child, !* +*">
-              </li>
-              <li>
-                 <img data-src="${rest.photos[1].photo.url}" class="uk-card-media-left card-image" alt="" uk-cover uk-img="target: !* -*, !* +*">
-               </li>
-               <li>
-                 <img data-src="${rest.photos[2].photo.url}" class="uk-card-media-left card-image" alt="" uk-cover uk-img="target: !* -*, !ul > :first-child">
-              </li>
-              <li>
-                 <img data-src="${rest.photos[3].photo.url}" class="uk-card-media-left card-image" alt="" uk-cover uk-img="target: !* -*, !ul > :first-child">
-              </li>
+    <div>
+    <div class="uk-position-relative uk-visible-toggle uk-light food-image " tabindex="-1" uk-slideshow>
+     <ul class="uk-slideshow-items food-image">
+            ${
+        rest.photos.map(({  photo }) => {
+            return `
+            <li>
+                 <img data-src="${photo.url}" class="uk-card-media-left food-image" alt="" uk-cover uk-img="target: !ul > :last-child, !* +*">
+            </li>  `})
+        }
               </ul>
               <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
               <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
@@ -256,14 +263,14 @@ function addListenerToDocument() {
             document.getElementById('input_text').value = ''
             document.getElementById('search-results').innerHTML = ``
             initPagination()
-        } else if(regex.test(target.id)) {
+        } else if (regex.test(target.id)) {
             let cardIndex = parseInt(target.value)
             latt = listOfEvents[cardIndex].latitude
             long = listOfEvents[cardIndex].longitude
             document.getElementById('contain-two').innerHTML = ''
             document.getElementById('search-results').innerHTML = ''
             getRestaurantChoices(latt, long)
-        } 
+        }
     })
 }
 addListenerToDocument()
