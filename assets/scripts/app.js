@@ -146,13 +146,16 @@ function buildEventCard(event, id) {
     eventElem.innerHTML =
         `
     <div class="uk-card-media-left uk-cover-container">
-        <img src="${event.imageURL}" alt="" class="card-image" uk-cover>
+        <img src="${event.imageURL}" alt="Event Image" class="card-image" uk-cover>
         <canvas width="500" height="400"></canvas>
     </div>
     <div>
         <div class="uk-card-body">
             <h3 class="uk-card-title">${event.name}</h3>
-            <p>${'content'}</p>
+            <p><a href="${event.url}">Link</a></p>
+            <p>${event.venueName}</p>
+            <p>${event.localDate}</p>
+            <button value="${index}" a class="uk-button uk-button-default" id="item-${index}">See top 10 restaurants</button>
         </div>
     </div>
     `
@@ -186,30 +189,34 @@ function getRestaurantChoices(latt, long) {
 
 function BuildRestCard(rest) {
     let restaurantResultElem = document.createElement('div')
-    restaurantResultElem.className = 'uk-card uk-card-hover uk-card-body uk-grid setup'
+    restaurantResultElem.className = 'uk-card uk-card-default uk-button uk-grid-collapse uk-child-width-1-2@s uk-margin'
+    restaurantResultElem.setAttribute('uk-grid', '')
     restaurantResultElem.innerHTML = `
-    <div>
-    <div class="uk-position-relative uk-visible-toggle uk-light food-image " tabindex="-1" uk-slideshow>
-     <ul class="uk-slideshow-items food-image">
-            ${
-        rest.photos.map(({  photo }) => {
+    <div class="uk-card-media-left uk-cover-container ">
+        <div class="uk-position-relative uk-visible-toggle uk-light food-image " tabindex="-1" uk-slideshow>
+        <ul class="uk-slideshow-items food-image">
+         ${
+        rest.photos.map(({ photo }) => {
             return `
             <li>
-                 <img data-src="${photo.url}" class="uk-card-media-left food-image" alt="" uk-cover uk-img="target: !ul > :last-child, !* +*">
-            </li>  `})
-        }
-              </ul>
-              <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
-              <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
-              </div>
+            <img data-src="${photo.url}" class="uk-card-media-left food-image" alt="Restaurant Image" uk-cover uk-img="target: !ul > :last-child, !* +*">
+            </li> `})
+            }
+        </ul>
+        <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+        <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+    </div>
+    </div>    
+            <div class="uk-card-body">
                 <h3 class="uk-card-title">${rest.name}</h3>
                 <p>Rating: ${rest.user_rating.aggregate_rating}</p>
                 <p>Highlights: ${rest.highlights}</p>
                 <p>Cuisines: ${rest.cuisines}</p>
                 <p>Address: ${rest.address}</p>
                 <p>Phone: ${rest.phone_numbers}</p>
-                </div>
-                 `
+            </div>    
+        </div>
+         `
     document.getElementById('search-results').append(restaurantResultElem)
 }
 
