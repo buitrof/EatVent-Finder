@@ -110,7 +110,7 @@ function fetchTMEventList(keywords) {
                     // console.log(event)
                     let ev = new Event(event)
                     listOfEvents.push(ev)
-                    buildEventCard(ev, listOfEvents.length-1)
+                    buildEventCard(ev, listOfEvents.length - 1)
                     // getLocation(ev, listOfEvents.length-1)
                 })
             } else {
@@ -126,21 +126,40 @@ function fetchTMEventList(keywords) {
 
 function buildEventCard(event, id) {
     index++
+    // let eventElem = document.createElement('div')
+    // eventElem.className = 'uk-card uk-card-hover uk-card-body uk-grid setup'
+    // eventElem.innerHTML = `
+    // <img src="${event.imageURL}" alt="Image" srcset="" class=" uk-card-media-left card-image">
+    // <div class="uk-width-xlarge">
+    // <h3 class="uk-card-title uk-text-break event-id">${event.name}</h3>
+    // <p><a href="${event.url}">Link</a></p>
+    // <p>${event.venueName}</p>
+    // <p>${event.localDate}</p>
+    // <button value="${index}" id="item-${index}">See top 10 restaurants</button>
+    // </div>
+    // `
+    // document.getElementById('container').innerHTML = ''
+    // document.getElementById('search-results').append(eventElem)
     let eventElem = document.createElement('div')
-    eventElem.className = 'uk-card uk-card-hover uk-card-body uk-grid setup'
-    eventElem.innerHTML = `
-    <img src="${event.imageURL}" alt="Image" srcset="" class=" uk-card-media-left card-image">
-    <div class="uk-width-xlarge">
-    <h3 class="uk-card-title uk-text-break event-id">${event.name}</h3>
-    <p><a href="${event.url}">Link</a></p>
-    <p>${event.venueName}</p>
-    <p>${event.localDate}</p>
-    <button value="${index}" id="item-${index}">See top 10 restaurants</button>
+    eventElem.className = 'uk-card uk-card-default uk-button uk-grid-collapse uk-child-width-1-2@s uk-margin'
+    eventElem.setAttribute('uk-grid', '')
+    eventElem.innerHTML =
+        `
+    <div class="uk-card-media-left uk-cover-container">
+        <img src="${event.imageURL}" alt="" class="card-image" uk-cover>
+        <canvas width="500" height="400"></canvas>
+    </div>
+    <div>
+        <div class="uk-card-body">
+            <h3 class="uk-card-title">${event.name}</h3>
+            <p>${'content'}</p>
+        </div>
     </div>
     `
     document.getElementById('container').innerHTML = ''
     document.getElementById('search-results').append(eventElem)
 }
+
 
 function getRestaurantChoices(latt, long) {
     let link = `${L_B_ZOMATO}lat=${latt}&lon=${long}&${S_RATING}&${K_ZOMATO}`
@@ -245,6 +264,7 @@ function initPagination() {
 //Adds event listener to page
 function addListenerToDocument() {
     document.addEventListener('click', ({ target }) => {
+        console.log(target)
         let regex = /item-[0-9]/
         if (target.id === "previous-btn") {
             onClickPrevious()
@@ -256,14 +276,14 @@ function addListenerToDocument() {
             document.getElementById('input_text').value = ''
             document.getElementById('search-results').innerHTML = ``
             initPagination()
-        } else if(regex.test(target.id)) {
+        } else if (regex.test(target.id)) {
             let cardIndex = parseInt(target.value)
             latt = listOfEvents[cardIndex].latitude
             long = listOfEvents[cardIndex].longitude
             document.getElementById('contain-two').innerHTML = ''
             document.getElementById('search-results').innerHTML = ''
             getRestaurantChoices(latt, long)
-        } 
+        }
     })
 }
 addListenerToDocument()
