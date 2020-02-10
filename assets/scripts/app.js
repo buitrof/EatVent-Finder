@@ -152,7 +152,7 @@ function buildEventCard(event, id) {
     <div>
         <div class="uk-card-body">
             <h3 class="uk-card-title">${event.name}</h3>
-            <p><a href="${event.url}">Link</a></p>
+            <button class="uk-button uk-button-default" type="button" data-uk-button><a href="${event.url}">Buy Tickets NOW!!</a></button>
             <p>${event.venueName}</p>
             <p>${event.localDate}</p>
             <button value="${index}" a class="uk-button uk-button-default" id="item-${index}">See top 10 restaurants</button>
@@ -209,8 +209,7 @@ function BuildRestCard(rest) {
     </div>
     </div>    
             <div class="uk-card-body">
-                <h3 class="uk-card-title">${rest.name}</h3>
-                <p>Rating: ${rest.user_rating.aggregate_rating}</p>
+                <h3 class="uk-card-title">${rest.name} <p class="uk-badge">${rest.user_rating.aggregate_rating}</p></h3>  
                 <p>Highlights: ${rest.highlights}</p>
                 <p>Cuisines: ${rest.cuisines}</p>
                 <p>Address: ${rest.address}</p>
