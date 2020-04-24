@@ -20,7 +20,7 @@ Visit the website https://jfrick1992.github.io/EatVent-Finder/ and search for an
 no license
 
 **Contributing** <br />
-Francisco Buitron, Jacob Frick, Jean Li, Jie Yan, Jenny Lam
+Francisco Buitron, Jacob Frick, Jean Li, Jie Yan, Jenny Lam <br />
 Original Repo can be found at: https://github.com/JFrick1992/EatVent-Finder
 
 **Tests** <br />
