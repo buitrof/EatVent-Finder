@@ -14,7 +14,7 @@ This is a front-end application utilizing HTML, CSS, and JS, as well as two APIs
 No installation necessary, see usage
 
 **Usage** <br />
-Visit the website https://jfrick1992.github.io/EatVent-Finder/ and search for an event using the search bar. Once you have found an event you like, click the buy tickets button to buy tickets or click the see top 10 restaurants button to see the highest rated restaurants in the area. To search for another event, click the logo or the home button.
+Visit the website https://buitrof.github.io/EatVent-Finder/ and search for an event using the search bar. Once you have found an event you like, click the buy tickets button to buy tickets or click the see top 10 restaurants button to see the highest rated restaurants in the area. To search for another event, click the logo or the home button.
 
 **License** <br />
 no license
